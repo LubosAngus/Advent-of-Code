@@ -38,7 +38,15 @@ export class AdventOfCode {
       } else {
         console.log(`\x1b[45mProvide an answer!\x1b[0m`)
       }
-      console.log(`\x1b[36m\x1b[2m${(new Date().getTime() - startTime) / 1000}s\x1b[0m`);
+      let timeItTook = new Date().getTime() - startTime
+
+      if (timeItTook < 1000) {
+        timeItTook = `${timeItTook} ms`
+      } else {
+        timeItTook = `${Math.round((timeItTook / 1000) * 100) / 100} s`
+      }
+
+      console.log(`\x1b[36m\x1b[2m${timeItTook}\x1b[0m`);
     })
   }
 }

@@ -45,7 +45,7 @@ const askSubmit = (config) => {
     }
   ], { onCancel: () => process.exit() }).then((res) => {
     if (res.submit) {
-      open(`https://adventofcode.com/${config.year}/day/${config.day}?result=${finalResult}`)
+      open(`https://adventofcode.com/${config.year}/day/${parseInt(config.day)}?result=${finalResult}`)
 
       clear()
       console.log(`\n\x1b[32mSubmitting day ${config.day} of year ${config.year} with result: \x1b[0m\x1b[45m${finalResult}\x1b[0m\n`)

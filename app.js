@@ -7,15 +7,27 @@ import open from 'open'
 let askingSubmit = false
 let finalResult = false
 
-const getDays = () => {
+const clear = () => {
+  // console.clear()
+  console.log('\x1Bc')
+}
+
+const getYears = () => {
   return readdirSync(process.cwd(), { withFileTypes: true })
+  .filter(file => file.isDirectory() && /\d{4}/.exec(file.name))
+  .map(file => ({ title: file.name, value: file.name }))
+  .sort((a, b) => b.title - a.title)
+}
+
+const getDays = (year) => {
+  return readdirSync(`${process.cwd()}/${year}`, { withFileTypes: true })
   .filter(file => file.isDirectory() && file.name !== '00' && /\d{2}/.exec(file.name))
   .map(file => ({ title: file.name, value: file.name }))
   .sort((a, b) => b.title - a.title)
 }
 
-const getScriptsInDay = (day) => {
-  return readdirSync(`${process.cwd()}/${day}`, { withFileTypes: true })
+const getScriptsInDay = (prev, values) => {
+  return readdirSync(`${process.cwd()}/${values.year}/${values.day}`, { withFileTypes: true })
   .filter(file => /\.js$/.exec(file.name))
   .map(file => ({ title: file.name, value: file.name }))
   .sort((a, b) => b.title[0] - a.title[0])
@@ -33,10 +45,10 @@ const askSubmit = (config) => {
     }
   ], { onCancel: () => process.exit() }).then((res) => {
     if (res.submit) {
-      open(`https://adventofcode.com/2020/day/${config.day}?result=${finalResult}`)
+      open(`https://adventofcode.com/${config.year}/day/${config.day}?result=${finalResult}`)
 
-      console.clear()
-      console.log(`\n\x1b[32mSubmitting day ${config.day} result: \x1b[0m\x1b[45m${finalResult}\x1b[0m\n`)
+      clear()
+      console.log(`\n\x1b[32mSubmitting day ${config.day} of year ${config.year} with result: \x1b[0m\x1b[45m${finalResult}\x1b[0m\n`)
 
       if (config.watch) {
         console.log(`\n\x1b[2m\x1b[32mIf you want to cancel this message,\njust save your file one more time.\x1b[0m\n`)
@@ -51,7 +63,7 @@ const execute = (config) => {
   let infoMsg = ''
 
   if (config.watch) {
-    infoMsg += `\n\x1b[46m\x1b[30m\x1b[1m Watching ${config.day}-${config.script.replace('.js', '')} \x1b[0m\n`
+    infoMsg += `\n\x1b[46m\x1b[30m\x1b[1m Watching ${config.year}-${config.day}-${config.script.replace('.js', '')} \x1b[0m\n`
   }
 
   infoMsg += `\x1b[2m\x1b[36mYou can submit result by pressing \x1b[0m\x1b[36m\x1b[1mY\x1b[0m\n`
@@ -60,12 +72,12 @@ const execute = (config) => {
     askSubmit(config)
   }
 
-  console.clear()
+  clear()
   console.log(infoMsg)
   console.log(`\x1b[7m Running \x1b[0m\n`)
 
-  exec(`cd ${config.day} && node ${config.script}`, (error, stdout, stderr) => {
-    console.clear()
+  exec(`cd ${config.year}/${config.day} && node ${config.script}`, (error, stdout, stderr) => {
+    clear()
     console.log(infoMsg)
 
     if (error) {
@@ -87,15 +99,21 @@ const execute = (config) => {
   const config = await prompts([
     {
       type: 'select',
+      name: 'year',
+      message: 'Which year?',
+      choices: getYears()
+    },
+    {
+      type: 'select',
       name: 'day',
       message: 'Which day?',
-      choices: getDays()
+      choices: (prev) => getDays(prev)
     },
     {
       type: 'select',
       name: 'script',
       message: 'Which script?',
-      choices: (prev) => getScriptsInDay(prev)
+      choices: (prev, values) => getScriptsInDay(prev, values)
     },
     {
       type: 'confirm',
@@ -105,7 +123,7 @@ const execute = (config) => {
     }
   ])
 
-  if (!config.day || !config.script) {
+  if (!config.year || !config.day || !config.script) {
     console.error("\x1b[45m Ain't no script to run \x1b[0m\n")
     return
   }
@@ -114,7 +132,7 @@ const execute = (config) => {
   execute(config)
 
   if (config.watch) {
-    watch(`./${config.day}/${config.script}`, {}, function() {
+    watch(`./${config.year}/${config.day}/${config.script}`, {}, function() {
       execute(config)
     })
   }

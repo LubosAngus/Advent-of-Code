@@ -2,7 +2,7 @@ import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
 
 class AdventOfCode extends BaseAdventOfCode
 {
-  constructor (inputFileName) {
+  constructor(inputFileName) {
     super(inputFileName)
   }
 
@@ -10,4 +10,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode('demo').run()

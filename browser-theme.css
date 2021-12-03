@@ -2,6 +2,9 @@
   --trainsition-property: color, background-color, border-color, box-shadow, text-shadow;
   --trainsition-timing-function: ease;
   --trainsition-duration: .15s;
+
+  --c-star: #e8da35;
+  --c-star-shadow: #e8da35dd;
 }
 
 body {
@@ -129,13 +132,19 @@ text-shadow: 0 0 2px #fff, 0 0 5px #fff;
 .stats-both,
 .privboard-star-both,
 .calendar-mark-complete,
-.calendar-mark-verycomplete {
-  color: #e6b400 !important;
+.calendar-mark-verycomplete,
+article em.star {
+  color: var(--c-star);
 }
 
 .star-count,
-.day-success {
-text-shadow: 0 0 2px #e6b400dd, 0 0 5px #e6b400dd;
+.day-success,
+.article em.star {
+text-shadow: 0 0 5px var(--c-star-shadow);
+}
+
+article em.star {
+  font-weight: 600;
 }
 
 .stats-unlocked,

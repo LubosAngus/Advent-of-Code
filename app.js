@@ -79,6 +79,7 @@ const execute = (config) => {
   exec(`cd ${config.year}/${config.day} && node ${config.script}`, (error, stdout, stderr) => {
     clear()
     console.log(infoMsg)
+    console.log(stdout)
 
     if (error) {
       console.log(`\x1b[31mERROR:\n\n${error.message}\x1b[0m\n`)
@@ -90,7 +91,6 @@ const execute = (config) => {
       return
     }
 
-    console.log(stdout)
     finalResult = JSON.parse(JSON.stringify(/Your result is: (.*)/m.exec(stdout)[1]).replace(/\\u001b\[0m\\u001b\[45m(.*)\\u001b\[0m/, '$1'))
   })
 }

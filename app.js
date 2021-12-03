@@ -6,6 +6,7 @@ import open from 'open'
 
 let askingSubmit = false
 let finalResult = false
+let watcher = false
 
 const clear = () => {
   // console.clear()
@@ -45,14 +46,43 @@ const askSubmit = (config) => {
     }
   ], { onCancel: () => process.exit() }).then((res) => {
     if (res.submit) {
-      open(`https://adventofcode.com/${config.year}/day/${parseInt(config.day)}?result=${finalResult}`)
+      // open(`https://adventofcode.com/${config.year}/day/${parseInt(config.day)}?result=${finalResult}`)
 
       clear()
       console.log(`\n\x1b[32mSubmitting day ${config.day} of year ${config.year} with result: \x1b[0m\x1b[45m${finalResult}\x1b[0m\n`)
 
-      if (config.watch) {
-        console.log(`\n\x1b[2m\x1b[32mIf you want to cancel this message,\njust save your file one more time.\x1b[0m\n`)
+      if (config.watch && watcher) {
+        watcher.close()
       }
+
+      prompts([
+        {
+          type: 'confirm',
+          name: 'commitChanges',
+          message: `Commit and push changes?`,
+          initial: false
+        }
+      ], { onCancel: () => process.exit() }).then((res) => {
+        if (!res.commitChanges) {
+          process.exit()
+        }
+
+        const commitMessage = `${config.year} - day ${parseInt(config.day)} - part ${config.script.replace('.js', '')}`
+
+        exec(`git add ${config.year}/${config.day} && git commit -m "${commitMessage}" && git push`, (error, stdout, stderr) => {
+          console.log(stdout)
+
+          if (error) {
+            console.log(`\n\x1b[31mERROR:\n\n${error.message}\x1b[0m\n`)
+          }
+
+          if (stderr) {
+            console.log(`\n\x1b[31mSTDERR:\n\n${stderr}\x1b[0m\n`)
+          }
+
+          process.exit()
+        })
+      })
     }
 
     askingSubmit = false
@@ -63,7 +93,7 @@ const execute = (config) => {
   let infoMsg = ''
 
   if (config.watch) {
-    infoMsg += `\n\x1b[46m\x1b[30m\x1b[1m Watching ${config.year}-${config.day}-${config.script.replace('.js', '')} \x1b[0m\n`
+    infoMsg += `\x1b[46m\x1b[30m\x1b[1m Watching ${config.year}-${config.day}-${config.script.replace('.js', '')} \x1b[0m\n`
   }
 
   infoMsg += `\x1b[2m\x1b[36mYou can submit result by pressing \x1b[0m\x1b[36m\x1b[1mY\x1b[0m\n`
@@ -82,12 +112,12 @@ const execute = (config) => {
     console.log(stdout)
 
     if (error) {
-      console.log(`\x1b[31mERROR:\n\n${error.message}\x1b[0m\n`)
+      console.log(`\n\x1b[31mERROR:\n\n${error.message}\x1b[0m\n`)
       return
     }
 
     if (stderr) {
-      console.log(`\x1b[31mSTDERR:\n\n${stderr}\x1b[0m\n`)
+      console.log(`\n\x1b[31mSTDERR:\n\n${stderr}\x1b[0m\n`)
       return
     }
 
@@ -96,6 +126,8 @@ const execute = (config) => {
 }
 
 (async () => {
+  clear()
+
   const config = await prompts([
     {
       type: 'select',
@@ -132,7 +164,7 @@ const execute = (config) => {
   execute(config)
 
   if (config.watch) {
-    watch(`./${config.year}/${config.day}/${config.script}`, {}, function() {
+    watcher = watch(`./${config.year}/${config.day}/${config.script}`, {}, function() {
       execute(config)
     })
   }

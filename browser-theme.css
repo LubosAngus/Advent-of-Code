@@ -24,6 +24,10 @@ letter-spacing: -.15px;
   }
 }
 
+code {
+  user-select: all;
+}
+
 pre,
 code {
   font-family: 'JetBrains Mono';

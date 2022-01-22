@@ -54,16 +54,16 @@ class AdventOfCode extends BaseAdventOfCode
       }
     }
 
-    const diagramStats = {
-      x: {
-        min: 0,
-        max: 0,
-      },
-      y: {
-        min: 0,
-        max: 0,
-      },
-    }
+    // const diagramStats = {
+    //   x: {
+    //     min: 0,
+    //     max: 0,
+    //   },
+    //   y: {
+    //     min: 0,
+    //     max: 0,
+    //   },
+    // }
 
     // for (const coords of diagram.keys()) {
     //   const [ x, y ] = Coords.parse(coords)
@@ -77,8 +77,9 @@ class AdventOfCode extends BaseAdventOfCode
     // for (let x = diagramStats.x.min; x <= diagramStats.x.max; x++) {
     //   const row = []
     //   for (let y = diagramStats.y.min; y <= diagramStats.y.max; y++) {
-    //     row.push(diagram.get(Coords.stringify([x,y])) || '.')
+    //     row.push(diagram.get(Coords.stringify([y,x])) || '.')
     //   }
+    //   console.log(row.join(''))
     // }
 
     return [...diagram.values()].reduce((acc, curr) => {

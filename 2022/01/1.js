@@ -14,18 +14,17 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   callback() {
-    const elfCalories = this.input.map((value) => value.reduce((acc, value) => acc + value, 0));
-    elfCalories.sort(function(a, b) {
-      return b - a;
-    })
+    let mostCalories = 0
 
-    let topCalories = 0
+    for (const elf of this.input) {
+      const elfCalories = elf.reduce((acc, value) => acc + value, 0)
 
-    for (let index = 0; index < 3; index++) {
-      topCalories += elfCalories[index]
+      if (elfCalories > mostCalories) {
+        mostCalories = elfCalories
+      }
     }
 
-    return topCalories
+    return mostCalories
   }
 }
 

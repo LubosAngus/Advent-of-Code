@@ -18,10 +18,8 @@ export class AdventOfCode {
   }
 
   parseInput(data: string): string[] | number[] {
-    const parsedData = data
-      .trim()
-      .split("\n")
-      .filter((value) => value)
+    // Split by new line, remove empty lines, macos / windows / linux
+    const parsedData = data.trim().split(/\r?\n/).filter(Boolean)
 
     if (this.inputAsInt) {
       return parsedData.map((value) => parseInt(value, 10))

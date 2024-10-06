@@ -1,4 +1,9 @@
 {
-    "editor.detectIndentation": false,
-    "editor.tabSize": 2
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "editor.wordWrap": "wordWrapColumn"
 }

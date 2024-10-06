@@ -1,26 +1,27 @@
 :root {
-  --trainsition-property: color, background-color, border-color, box-shadow, text-shadow;
+  --trainsition-property: color, background-color, border-color, box-shadow,
+    text-shadow;
   --trainsition-timing-function: ease;
-  --trainsition-duration: .15s;
+  --trainsition-duration: 0.15s;
 
   --c-star: #e8da35;
   --c-star-shadow: #e8da35dd;
 }
 
 body {
-font-family: 'JetBrains Mono';
-color: #b7c5d3;
-background: #171d24;
-font-size: 14pt;
-line-height: 1.4;
-letter-spacing: -.15px;
+  font-family: "JetBrains Mono";
+  color: #b7c5d3;
+  background: #171d24;
+  font-size: 14pt;
+  line-height: 1.4;
+  letter-spacing: -0.15px;
   -webkit-font-smoothing: antialiased;
   padding: 1em;
 }
 
 @media (max-width: 1365px) {
   body {
-      font-size: 13pt;
+    font-size: 13pt;
   }
 }
 
@@ -30,7 +31,7 @@ code {
 
 pre,
 code {
-  font-family: 'JetBrains Mono';
+  font-family: "JetBrains Mono";
   line-height: 1.3;
   color: #718ca1;
 }
@@ -57,7 +58,7 @@ em code {
 }
 
 a {
-color: #5ec4ff;
+  color: #5ec4ff;
   font-weight: 500;
   transition-property: var(--trainsition-property);
   transition-duration: var(--trainsition-duration);
@@ -68,7 +69,7 @@ input[type="submit"],
 .share {
   color: #8bd49c;
   font-weight: 700;
-text-shadow: 0 0 5px #8bd49c88;
+  text-shadow: 0 0 5px #8bd49c88;
   transition-property: var(--trainsition-property);
   transition-duration: var(--trainsition-duration);
   transition-timing-function: var(--trainsition-timing-function);
@@ -79,7 +80,9 @@ a:focus,
 input[type="submit"]:hover,
 .share:hover {
   color: #fff;
-text-shadow: 0 0 2px #fff8, 0 0 5px #fff8;
+  text-shadow:
+    0 0 2px #fff8,
+    0 0 5px #fff8;
 }
 
 input[type="text"],
@@ -106,7 +109,7 @@ textarea:focus {
 }
 
 article em {
-text-shadow: 0 0 5px #ffffff44;
+  text-shadow: 0 0 5px #ffffff44;
   font-weight: 900;
 }
 
@@ -121,14 +124,18 @@ header > div {
 
 header h1 a,
 header h1 span {
-color: #70e1e8;
-text-shadow: 0 0 2px #70e1e8, 0 0 5px #70e1e8;
+  color: #70e1e8;
+  text-shadow:
+    0 0 2px #70e1e8,
+    0 0 5px #70e1e8;
 }
 
 header h1 a:hover,
-header h1 a:focus{
-color: #fff;
-text-shadow: 0 0 2px #fff, 0 0 5px #fff;
+header h1 a:focus {
+  color: #fff;
+  text-shadow:
+    0 0 2px #fff,
+    0 0 5px #fff;
 }
 
 .star-count,
@@ -144,7 +151,7 @@ article em.star {
 .star-count,
 .day-success,
 .article em.star {
-text-shadow: 0 0 5px var(--c-star-shadow);
+  text-shadow: 0 0 5px var(--c-star-shadow);
 }
 
 article em.star {

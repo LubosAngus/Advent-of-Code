@@ -1,22 +1,21 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class Validator
-{
-  constructor (passport) {
+class Validator {
+  constructor(passport) {
     this.passport = passport
-    this.passportFields = this.passport.split(' ').filter(v => v)
-    this.required = ['byr:','iyr:','eyr:','hgt:','hcl:','ecl:','pid:']
+    this.passportFields = this.passport.split(" ").filter((v) => v)
+    this.required = ["byr:", "iyr:", "eyr:", "hgt:", "hcl:", "ecl:", "pid:"]
   }
 
   validate() {
     if (!this.checkRequiredFields(this.passport)) return false
 
     for (const fieldRaw of this.passportFields) {
-      const field = fieldRaw.split(':')
+      const field = fieldRaw.split(":")
       const name = field[0]
       const value = field[1]
 
-      if (typeof this[name] === 'function' && !this[name](value)) {
+      if (typeof this[name] === "function" && !this[name](value)) {
         return false
       }
     }
@@ -51,8 +50,8 @@ class Validator
   // If cm, the number must be at least 150 and at most 193.
   // If in, the number must be at least 59 and at most 76.
   hgt(value) {
-    const is_cm = value.includes('cm')
-    const is_in = value.includes('in')
+    const is_cm = value.includes("cm")
+    const is_in = value.includes("in")
 
     if (!is_cm && !is_in) return false
 
@@ -70,7 +69,7 @@ class Validator
 
   // (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
   ecl(value) {
-    return ['amb','blu','brn','gry','grn','hzl','oth'].includes(value)
+    return ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].includes(value)
   }
 
   // (Passport ID) - a nine-digit number, including leading zeroes.
@@ -85,20 +84,23 @@ class Validator
   }
 }
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.answer = 0
   }
 
   parseInput(data) {
-    return data.trim().replace(/^(.{1,})\n/gm, `$1 `).split('\n').filter(value => value)
+    return data
+      .trim()
+      .replace(/^(.{1,})\n/gm, `$1 `)
+      .split("\n")
+      .filter((value) => value)
   }
 
   callback() {
-    this.input.forEach(passport => {
+    this.input.forEach((passport) => {
       const isValid = new Validator(passport).validate()
 
       if (isValid) this.answer++
@@ -109,4 +111,4 @@ class AdventOfCode extends BaseAdventOfCode
 }
 
 // new AdventOfCode('demo').run()
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

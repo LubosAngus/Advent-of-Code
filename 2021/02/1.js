@@ -1,34 +1,35 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
   }
 
   callback() {
     const position = {
       horizontal: 0,
-      depth: 0
+      depth: 0,
     }
 
     for (const row of this.input) {
-      let { instruction, value } = /(?<instruction>.*?) (?<value>\d+)/.exec(row).groups
+      let { instruction, value } = /(?<instruction>.*?) (?<value>\d+)/.exec(
+        row,
+      ).groups
 
       value = parseInt(value)
 
       switch (instruction) {
-        case 'forward':
+        case "forward":
           position.horizontal += value
-          break;
+          break
 
-        case 'down':
+        case "down":
           position.depth += value
-          break;
+          break
 
-        case 'up':
+        case "up":
           position.depth -= value
-          break;
+          break
       }
     }
 
@@ -36,4 +37,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

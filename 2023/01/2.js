@@ -1,14 +1,24 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
 
   callback() {
     const numbers = this.input.map((line) => {
-      const validStringNumbers = ['-','one','two','three','four','five','six','seven','eight','nine']
+      const validStringNumbers = [
+        "-",
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+      ]
       const lineNumbers = []
 
       for (let index = 0; index < line.length; index++) {
@@ -44,4 +54,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

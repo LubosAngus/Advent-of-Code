@@ -1,20 +1,19 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
 
   removeDuplicates(data) {
     return data.map((item) => {
-      const splitArray = item.split('')
+      const splitArray = item.split("")
 
-      item = splitArray.filter((item, index) => {
-        return splitArray.indexOf(item) === index
-      })
+      item = splitArray.filter(
+        (item, index) => splitArray.indexOf(item) === index,
+      )
 
-      return item.join('')
+      return item.join("")
     })
   }
 
@@ -22,7 +21,7 @@ class AdventOfCode extends BaseAdventOfCode
     return data.reduce((accumulator, current, index) => {
       const groupIndex = Math.floor(index / 3)
 
-      if (typeof accumulator[groupIndex] === 'undefined') {
+      if (typeof accumulator[groupIndex] === "undefined") {
         accumulator[groupIndex] = []
       }
 
@@ -33,7 +32,10 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   parseInput(data) {
-    data = data.trim().split('\n').filter(value => value)
+    data = data
+      .trim()
+      .split("\n")
+      .filter((value) => value)
     data = this.removeDuplicates(data)
     data = this.divideIntoGroups(data)
 
@@ -54,11 +56,10 @@ class AdventOfCode extends BaseAdventOfCode
     let commonItemTypes = []
 
     for (let index = 0; index < this.input.length; index++) {
-      const [first, second, third] = this.input[index];
+      const [first, second, third] = this.input[index]
       let commonItem = null
 
-      searchLoop:
-      for (let lvl1 = 0; lvl1 < first.length; lvl1++) {
+      searchLoop: for (let lvl1 = 0; lvl1 < first.length; lvl1++) {
         for (let lvl2 = 0; lvl2 < second.length; lvl2++) {
           if (first[lvl1] !== second[lvl2]) {
             continue
@@ -76,10 +77,12 @@ class AdventOfCode extends BaseAdventOfCode
       commonItemTypes.push(commonItem)
     }
 
-    commonItemTypes = commonItemTypes.map((letter) => this.getNumberValueForLetter(letter))
+    commonItemTypes = commonItemTypes.map((letter) =>
+      this.getNumberValueForLetter(letter),
+    )
 
     return commonItemTypes.reduce((partialSum, a) => partialSum + a, 0)
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

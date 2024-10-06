@@ -1,0 +1,6 @@
+{
+  "semi": false,
+  "quoteProps": "consistent",
+  "printWidth": 80,
+  "arrowParens": "always"
+}

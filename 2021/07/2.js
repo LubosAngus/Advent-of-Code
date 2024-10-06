@@ -1,13 +1,12 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
 
   parseInput(data) {
-    return data.split(',').map(Number)
+    return data.split(",").map(Number)
   }
 
   callback() {
@@ -20,10 +19,10 @@ class AdventOfCode extends BaseAdventOfCode
 
       for (const crab of this.input) {
         let numberOfSteps = Math.abs(position - crab)
-        fuel = fuel + numberOfSteps / 2 * (numberOfSteps + 1)
+        fuel = fuel + (numberOfSteps / 2) * (numberOfSteps + 1)
 
         if (cheapestFuel < fuel) {
-          break;
+          break
         }
       }
 
@@ -36,4 +35,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

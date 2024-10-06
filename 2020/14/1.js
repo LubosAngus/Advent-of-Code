@@ -1,8 +1,7 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.mask = null
@@ -17,28 +16,28 @@ class AdventOfCode extends BaseAdventOfCode
     // console.log(this.int2bin(101))
 
     for (const insturction of this.input) {
-      if (insturction.includes('mask')) {
-        this.mask = insturction.replace('mask = ', '')
+      if (insturction.includes("mask")) {
+        this.mask = insturction.replace("mask = ", "")
         continue
       }
 
       const matches = /mem\[(\d+)\] = (\d+)/.exec(insturction)
       const memoryKey = matches[1]
-      let memoryValue = this.int2bin(matches[2]).split('')
+      let memoryValue = this.int2bin(matches[2]).split("")
 
       for (let i = 0; i < this.mask.length; i++) {
         const maskValue = this.mask[i]
 
-        if (maskValue === 'X') continue
+        if (maskValue === "X") continue
 
         memoryValue[i] = this.mask[i]
       }
 
-      this.memory[memoryKey] = parseInt(memoryValue.join(''), 2)
+      this.memory[memoryKey] = parseInt(memoryValue.join(""), 2)
     }
 
     return Object.values(this.memory).reduce((a, b) => a + b, 0)
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

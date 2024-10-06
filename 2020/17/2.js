@@ -1,33 +1,37 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
   }
 
   parseInput(data) {
     data = data
       .trim()
-      .split('\n')
-      .filter(val => val)
+      .split("\n")
+      .filter((val) => val)
 
     return data
   }
 
   getCoordsString(coords) {
-    return coords.join(',')
+    return coords.join(",")
   }
 
   getNeighbors(coords) {
-    const [ x, y, z, w ] = coords.split(',').map(Number)
+    const [x, y, z, w] = coords.split(",").map(Number)
     const neighbors = new Set()
 
     for (let posX = -1; posX <= 1; posX++) {
       for (let posY = -1; posY <= 1; posY++) {
         for (let posZ = -1; posZ <= 1; posZ++) {
           for (let posW = -1; posW <= 1; posW++) {
-            const neighbor = this.getCoordsString([x + posX, y + posY, z + posZ, w + posW])
+            const neighbor = this.getCoordsString([
+              x + posX,
+              y + posY,
+              z + posZ,
+              w + posW,
+            ])
             neighbors.add(neighbor)
           }
         }
@@ -59,7 +63,7 @@ class AdventOfCode extends BaseAdventOfCode
         }
       }
 
-      if (new Set([2,3]).has(activeNeighbors)) {
+      if (new Set([2, 3]).has(activeNeighbors)) {
         newCubes.add(activeCube)
       }
     }
@@ -82,7 +86,7 @@ class AdventOfCode extends BaseAdventOfCode
       for (let posY = 0; posY < this.input[posX].length; posY++) {
         const cube = this.input[posX][posY]
 
-        if (cube === '#') {
+        if (cube === "#") {
           activeCubes.add(this.getCoordsString([posX, posY, 0, 0]))
         }
       }
@@ -102,4 +106,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('demo').run()
+new AdventOfCode("demo").run()

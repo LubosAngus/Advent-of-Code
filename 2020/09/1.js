@@ -1,8 +1,7 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.inputAsInt = true
@@ -30,11 +29,11 @@ class AdventOfCode extends BaseAdventOfCode
 
   callback() {
     for (let index = this.permable; index < this.input.length; index++) {
-      const number = this.input[index];
+      const number = this.input[index]
       const toCalc = []
 
       for (let j = 1; j <= this.permable; j++) {
-        toCalc.push(this.input[index - j]);
+        toCalc.push(this.input[index - j])
       }
 
       if (!this.isValid(number, toCalc)) {
@@ -48,4 +47,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

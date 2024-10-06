@@ -1,24 +1,23 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
 
     this.weightMap = {
-      'A': 14,
-      'K': 13,
-      'Q': 12,
-      'J': 11,
-      'T': 10,
-      '9': 9,
-      '8': 8,
-      '7': 7,
-      '6': 6,
-      '5': 5,
-      '4': 4,
-      '3': 3,
-      '2': 2,
+      A: 14,
+      K: 13,
+      Q: 12,
+      J: 11,
+      T: 10,
+      9: 9,
+      8: 8,
+      7: 7,
+      6: 6,
+      5: 5,
+      4: 4,
+      3: 3,
+      2: 2,
     }
   }
 
@@ -26,28 +25,22 @@ class AdventOfCode extends BaseAdventOfCode
     const cardValues = Object.values(cardsCount)
 
     // Five of a kind
-    if (cardValues.includes(5))
-      return 7
+    if (cardValues.includes(5)) return 7
 
     // Four of a kind
-    if (cardValues.includes(4))
-      return 6
+    if (cardValues.includes(4)) return 6
 
     // Full house
-    if (cardValues.includes(3) && cardValues.includes(2))
-      return 5
+    if (cardValues.includes(3) && cardValues.includes(2)) return 5
 
     // Three of a kind
-    if (cardValues.includes(3))
-      return 4
+    if (cardValues.includes(3)) return 4
 
     // Two pairs
-    if (cardValues.filter((value) => value === 2).length === 2)
-      return 3
+    if (cardValues.filter((value) => value === 2).length === 2) return 3
 
     // One pair
-    if (cardValues.includes(2))
-      return 2
+    if (cardValues.includes(2)) return 2
 
     return 1
   }
@@ -68,8 +61,8 @@ class AdventOfCode extends BaseAdventOfCode
 
   callback() {
     const hands = this.input.map((line) => {
-      const [hand, bid] = line.split(' ')
-      const handSplit = hand.split('')
+      const [hand, bid] = line.split(" ")
+      const handSplit = hand.split("")
       const rank = this.getCardsRank(handSplit)
 
       return {
@@ -91,12 +84,10 @@ class AdventOfCode extends BaseAdventOfCode
       }
 
       return a.rank - b.rank
-    });
+    })
 
-    return hands.reduce((acc, hand, index) => {
-      return acc + (hand.bid * (index + 1))
-    }, 0);
+    return hands.reduce((acc, hand, index) => acc + hand.bid * (index + 1), 0)
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

@@ -1,7 +1,6 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
 
@@ -10,17 +9,17 @@ class AdventOfCode extends BaseAdventOfCode
 
   verdict(opponent, you) {
     const resultMap = {
-      'AX': 'draw', // rock - rock
-      'AY': 'win', // rock - paper
-      'AZ': 'lose', // rock - scissors
+      AX: "draw", // rock - rock
+      AY: "win", // rock - paper
+      AZ: "lose", // rock - scissors
 
-      'BX': 'lose', // paper - rock
-      'BY': 'draw', // paper - paper
-      'BZ': 'win', // paper - scissors
+      BX: "lose", // paper - rock
+      BY: "draw", // paper - paper
+      BZ: "win", // paper - scissors
 
-      'CX': 'win', // scissors - rock
-      'CY': 'lose', // scissors - paper
-      'CZ': 'draw', // scissors - scissors
+      CX: "win", // scissors - rock
+      CY: "lose", // scissors - paper
+      CZ: "draw", // scissors - scissors
     }
 
     return resultMap[`${opponent}${you}`]
@@ -28,14 +27,14 @@ class AdventOfCode extends BaseAdventOfCode
 
   calculateRoundScore(opponent, you) {
     const decisionScoreMap = {
-      'X': 1,
-      'Y': 2,
-      'Z': 3,
+      X: 1,
+      Y: 2,
+      Z: 3,
     }
     const verdictScoreMap = {
-      'win': 6,
-      'draw': 3,
-      'lose': 0,
+      win: 6,
+      draw: 3,
+      lose: 0,
     }
 
     this.score += decisionScoreMap[you]
@@ -44,7 +43,7 @@ class AdventOfCode extends BaseAdventOfCode
 
   callback() {
     for (const round of this.input) {
-      const [ opponent, you ] = round.split(' ')
+      const [opponent, you] = round.split(" ")
 
       this.calculateRoundScore(opponent, you)
     }
@@ -53,4 +52,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

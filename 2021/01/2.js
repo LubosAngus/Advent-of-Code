@@ -1,8 +1,7 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.inputAsInt = true
@@ -13,9 +12,9 @@ class AdventOfCode extends BaseAdventOfCode
     let last = null
 
     for (let index = 2; index < this.input.length; index++) {
-      const current = (new Array(3).fill()).reduce((acc, _, arrIndex) => {
-        return acc + this.input[index - arrIndex]
-      }, 0)
+      const current = new Array(3)
+        .fill()
+        .reduce((acc, _, arrIndex) => acc + this.input[index - arrIndex], 0)
 
       if (last !== null && current > last) {
         largerMeasurements++
@@ -28,4 +27,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

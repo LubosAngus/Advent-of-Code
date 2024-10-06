@@ -1,4 +1,4 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
 /*
 251709498 -> too high
@@ -6,61 +6,60 @@ import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
 Not very optimized, but it works.
 */
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
 
     this.weightMap = {
-      'A': 14,
-      'K': 13,
-      'Q': 12,
-      'T': 10,
-      '9': 9,
-      '8': 8,
-      '7': 7,
-      '6': 6,
-      '5': 5,
-      '4': 4,
-      '3': 3,
-      '2': 2,
-      'J': 1,
+      A: 14,
+      K: 13,
+      Q: 12,
+      T: 10,
+      9: 9,
+      8: 8,
+      7: 7,
+      6: 6,
+      5: 5,
+      4: 4,
+      3: 3,
+      2: 2,
+      J: 1,
     }
 
     this.handsStrengthCache = {}
   }
 
   permute(set) {
-    const results = [];
+    const results = []
 
     function generatePerm(front, i) {
       // for each element in the ith array
       for (let j = 0; j < set[i].length; j++) {
         // take a copy of the part we've already computed
-        let perm = front.slice(0);
+        let perm = front.slice(0)
         // add the jth element from the ith array
-        perm += set[i][j];
+        perm += set[i][j]
 
         // if we haven't used every array yet,
         // move on to the i+1th array
-        if (i < set.length - 1) generatePerm(perm, i + 1);
+        if (i < set.length - 1) generatePerm(perm, i + 1)
         // else add our perm to the result array
         // and move onto the j+1th element of the ith array
-        else results.push(perm);
+        else results.push(perm)
       }
     }
 
     // start off our recursion with an
     // empty permutation on the first array
-    generatePerm('', 0);
-    return results;
+    generatePerm("", 0)
+    return results
   }
 
   getCacheKey(cardsCount) {
     const tmpArr = []
     const keys = Object.keys(cardsCount)
     for (let index = 0; index < keys.length; index++) {
-      const key = keys[index];
+      const key = keys[index]
 
       tmpArr.push({
         key,
@@ -76,7 +75,7 @@ class AdventOfCode extends BaseAdventOfCode
       return b.value - a.value
     })
 
-    return tmpArr.map((item) => item.key + item.value).join('-')
+    return tmpArr.map((item) => item.key + item.value).join("-")
   }
 
   getHandStrength(cardsCount) {
@@ -90,28 +89,18 @@ class AdventOfCode extends BaseAdventOfCode
     let strength = 1
 
     // Five of a kind
-    if (cardValues.includes(5))
-      strength = 7
-
+    if (cardValues.includes(5)) strength = 7
     // Four of a kind
-    else if (cardValues.includes(4))
-      strength = 6
-
+    else if (cardValues.includes(4)) strength = 6
     // Full house
-    else if (cardValues.includes(3) && cardValues.includes(2))
-      strength = 5
-
+    else if (cardValues.includes(3) && cardValues.includes(2)) strength = 5
     // Three of a kind
-    else if (cardValues.includes(3))
-      strength = 4
-
+    else if (cardValues.includes(3)) strength = 4
     // Two pairs
     else if (cardValues.filter((value) => value === 2).length === 2)
       strength = 3
-
     // One pair
-    else if (cardValues.includes(2))
-      strength = 2
+    else if (cardValues.includes(2)) strength = 2
 
     this.handsStrengthCache[cacheKey] = strength
 
@@ -136,13 +125,17 @@ class AdventOfCode extends BaseAdventOfCode
     let possibleHands = []
 
     const jokerIndexes = handSplit.reduce((acc, card, index) => {
-      if (card === 'J') {
+      if (card === "J") {
         acc.push(index)
       }
 
       return acc
     }, [])
-    const lowestCard = Math.min(...handSplit.filter((card) => card !== 'J').map((card) => this.weightMap[card]))
+    const lowestCard = Math.min(
+      ...handSplit
+        .filter((card) => card !== "J")
+        .map((card) => this.weightMap[card]),
+    )
     const jokerReplacements = []
 
     for (let i = 0; i < jokerIndexes.length; i++) {
@@ -161,7 +154,7 @@ class AdventOfCode extends BaseAdventOfCode
       let possibleHand = [...handSplit]
 
       for (let index = 0; index < jokerIndexes.length; index++) {
-        const jokerIndex = jokerIndexes[index];
+        const jokerIndex = jokerIndexes[index]
 
         possibleHand[jokerIndex] = permutation[index]
       }
@@ -170,24 +163,24 @@ class AdventOfCode extends BaseAdventOfCode
     }
 
     // unique
-    possibleHands = possibleHands.filter((hand, index) => {
-      return possibleHands.findIndex((hand2) => {
-        return hand2.join('') === hand.join('')
-      }) === index
-    })
+    possibleHands = possibleHands.filter(
+      (hand, index) =>
+        possibleHands.findIndex((hand2) => hand2.join("") === hand.join("")) ===
+        index,
+    )
 
     return possibleHands
   }
 
   callback() {
     const hands = this.input.map((line) => {
-      const [hand, bid] = line.split(' ')
-      const handSplit = hand.split('')
+      const [hand, bid] = line.split(" ")
+      const handSplit = hand.split("")
       let strength = 0
 
-      if (handSplit.every((card) => card === 'J')) {
+      if (handSplit.every((card) => card === "J")) {
         strength = 7
-      } else if (handSplit.includes('J')) {
+      } else if (handSplit.includes("J")) {
         const possibleHands = this.getPossibleHands(handSplit)
 
         for (const possibleHand of possibleHands) {
@@ -220,12 +213,10 @@ class AdventOfCode extends BaseAdventOfCode
       }
 
       return a.strength - b.strength
-    });
+    })
 
-    return hands.reduce((acc, hand, index) => {
-      return acc + (hand.bid * (index + 1))
-    }, 0);
+    return hands.reduce((acc, hand, index) => acc + hand.bid * (index + 1), 0)
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

@@ -1,8 +1,7 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.invalidValues = []
@@ -14,9 +13,9 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   getFields(data) {
-    const regex = /(\w+): (.+) or (.+)/gm;
-    let fields = {};
-    let m;
+    const regex = /(\w+): (.+) or (.+)/gm
+    let fields = {}
+    let m
 
     while ((m = regex.exec(data)) !== null) {
       if (m.index === regex.lastIndex) regex.lastIndex++
@@ -25,11 +24,15 @@ class AdventOfCode extends BaseAdventOfCode
       let validValues = []
 
       m.forEach((match, groupIndex) => {
-        if (groupIndex == 0) {}
-        else if (groupIndex == 1) field = match
-        else {
-          const range = match.split('-')
-          for (let index = parseInt(range[0]); index <= parseInt(range[1]); index++) {
+        if (groupIndex == 1) {
+          field = match
+        } else if (groupIndex !== 0) {
+          const range = match.split("-")
+          for (
+            let index = parseInt(range[0]);
+            index <= parseInt(range[1]);
+            index++
+          ) {
             validValues.push(index)
           }
         }
@@ -42,13 +45,17 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   getNearbyTickets(data) {
-    return /nearby tickets:\n(.*)/s.exec(data)[1].split('\n').map(v => v.split(',').map(Number))
+    return /nearby tickets:\n(.*)/s
+      .exec(data)[1]
+      .split("\n")
+      .map((v) => v.split(",").map(Number))
   }
 
   callback() {
-    const allValidValues = Object.values(this.fields).reduce((accumulator, current) => {
-      return [...accumulator, ...current]
-    }, [])
+    const allValidValues = Object.values(this.fields).reduce(
+      (accumulator, current) => [...accumulator, ...current],
+      [],
+    )
 
     for (const ticket of this.nearbyTickets) {
       for (const value of ticket) {
@@ -58,8 +65,8 @@ class AdventOfCode extends BaseAdventOfCode
       }
     }
 
-    return eval(this.invalidValues.join('+'))
+    return eval(this.invalidValues.join("+"))
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

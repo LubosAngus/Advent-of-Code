@@ -1,7 +1,6 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
@@ -9,9 +8,7 @@ class AdventOfCode extends BaseAdventOfCode
   parseInput(data) {
     data = super.parseInput(data)
 
-    return data.map((number) => {
-      return number.split('').map(Number)
-    })
+    return data.map((number) => number.split("").map(Number))
   }
 
   getBits(input) {
@@ -35,7 +32,7 @@ class AdventOfCode extends BaseAdventOfCode
     const mostCommon = []
     const leastCommon = []
     for (let bitIndex = 0; bitIndex < bits.length; bitIndex++) {
-      const bit = bits[bitIndex];
+      const bit = bits[bitIndex]
 
       mostCommon[bitIndex] = bit[0] <= bit[1] ? 1 : 0
       leastCommon[bitIndex] = bit[0] > bit[1] ? 1 : 0
@@ -64,15 +61,15 @@ class AdventOfCode extends BaseAdventOfCode
       }
     }
 
-    return rating[0].join('')
+    return rating[0].join("")
   }
 
   callback() {
-    const generatorRating = this.getRating('mostCommon')
-    const scrubberRating = this.getRating('leastCommon')
+    const generatorRating = this.getRating("mostCommon")
+    const scrubberRating = this.getRating("leastCommon")
 
     return parseInt(generatorRating, 2) * parseInt(scrubberRating, 2)
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

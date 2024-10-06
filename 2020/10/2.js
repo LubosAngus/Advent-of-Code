@@ -1,15 +1,19 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.pathsCache = {}
   }
 
   parseInput(data) {
-    this.input = data.trim().split('\n').filter(value => value).map(value => parseInt(value)).sort((a, b) => a - b)
+    this.input = data
+      .trim()
+      .split("\n")
+      .filter((value) => value)
+      .map((value) => parseInt(value))
+      .sort((a, b) => a - b)
     this.input.unshift(0)
 
     return this.input
@@ -24,12 +28,12 @@ class AdventOfCode extends BaseAdventOfCode
 
     let possiblePaths = 0
 
-    const current = this.input[index];
+    const current = this.input[index]
 
     for (let j = 1; j <= 3; j++) {
       const next = this.input[index + j]
 
-      if (typeof next === 'undefined' || next - current > 3) break
+      if (typeof next === "undefined" || next - current > 3) break
 
       possiblePaths += this.findPath(index + j)
     }
@@ -43,4 +47,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

@@ -1,7 +1,6 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
 
@@ -9,7 +8,7 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   parseInput(data) {
-    return data.split(',').map(Number)
+    return data.split(",").map(Number)
   }
 
   callback() {
@@ -33,4 +32,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

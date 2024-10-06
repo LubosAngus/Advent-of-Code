@@ -1,24 +1,36 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-Array.prototype.remove = function() {
-  var what, a = arguments, L = a.length, ax;
+Array.prototype.remove = function () {
+  var what,
+    a = arguments,
+    L = a.length,
+    ax
   while (L && this.length) {
-      what = a[--L];
-      while ((ax = this.indexOf(what)) !== -1) {
-          this.splice(ax, 1);
-      }
+    what = a[--L]
+    while ((ax = this.indexOf(what)) !== -1) {
+      this.splice(ax, 1)
+    }
   }
-  return this;
-};
+  return this
+}
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   get nearbyTickets() {
-    const nearbyTickets = /nearby tickets:\n(.*)/s.exec(this.inputData)[1].split('\n').map(v => v.split(',').map(Number))
-    const allValidValues = Object.values(this.validFieldsValues).reduce((accumulator, current) => [...accumulator, ...current], [])
+    const nearbyTickets = /nearby tickets:\n(.*)/s
+      .exec(this.inputData)[1]
+      .split("\n")
+      .map((v) => v.split(",").map(Number))
+    const allValidValues = Object.values(this.validFieldsValues).reduce(
+      (accumulator, current) => [...accumulator, ...current],
+      [],
+    )
     const ticketsToRemove = []
 
-    for (let ticketIndex = 0; ticketIndex < nearbyTickets.length; ticketIndex++) {
+    for (
+      let ticketIndex = 0;
+      ticketIndex < nearbyTickets.length;
+      ticketIndex++
+    ) {
       const ticket = nearbyTickets[ticketIndex]
 
       for (const value of ticket) {
@@ -36,14 +48,17 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   get myTicket() {
-    return /your ticket:\n(.*)/.exec(this.inputData)[1].split('\n').map(v => v.split(',').map(Number))[0]
+    return /your ticket:\n(.*)/
+      .exec(this.inputData)[1]
+      .split("\n")
+      .map((v) => v.split(",").map(Number))[0]
   }
 
   get allTickets() {
     return [...[this.myTicket], ...this.nearbyTickets]
   }
 
-  constructor (inputFileName) {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.validFieldsValues = []
@@ -69,11 +84,15 @@ class AdventOfCode extends BaseAdventOfCode
       let validFieldsValues = []
 
       m.forEach((match, groupIndex) => {
-        if (groupIndex == 0) {}
-        else if (groupIndex == 1) field = match
-        else {
-          const range = match.split('-')
-          for (let index = parseInt(range[0]); index <= parseInt(range[1]); index++) {
+        if (groupIndex == 1) {
+          field = match
+        } else if (groupIndex !== 0) {
+          const range = match.split("-")
+          for (
+            let index = parseInt(range[0]);
+            index <= parseInt(range[1]);
+            index++
+          ) {
             validFieldsValues.push(index)
           }
         }
@@ -110,7 +129,7 @@ class AdventOfCode extends BaseAdventOfCode
     }
 
     for (let index = 0; index < this.fieldsValues.length; index++) {
-      const fieldValues = this.fieldsValues[index];
+      const fieldValues = this.fieldsValues[index]
 
       for (const fieldValue of fieldValues) {
         for (const possibleField of Object.keys(this.validFieldsValues)) {
@@ -140,7 +159,7 @@ class AdventOfCode extends BaseAdventOfCode
     }
 
     const departureIndexes = finalValues.reduce((acc, curr, index) => {
-      if (curr.includes('departure')) {
+      if (curr.includes("departure")) {
         acc.push(index)
       }
 
@@ -161,4 +180,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

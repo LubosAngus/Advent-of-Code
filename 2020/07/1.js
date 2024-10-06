@@ -1,8 +1,7 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.allBags = []
@@ -10,7 +9,11 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   parseInput(data) {
-    return data.replace(/ ?bags?|\./g, '').trim().split('\n').filter(value => value)
+    return data
+      .replace(/ ?bags?|\./g, "")
+      .trim()
+      .split("\n")
+      .filter((value) => value)
   }
 
   canHold(bag, toHold) {
@@ -37,13 +40,13 @@ class AdventOfCode extends BaseAdventOfCode
 
   createHoldMap() {
     for (const item of this.input) {
-      const itemSplit = item.split(' contain ')
+      const itemSplit = item.split(" contain ")
       let contents = []
 
       this.addBagToAll(itemSplit[0])
 
-      if (itemSplit[1] != 'no other') {
-        for (const inside of itemSplit[1].replace('.', '').split(', ')) {
+      if (itemSplit[1] != "no other") {
+        for (const inside of itemSplit[1].replace(".", "").split(", ")) {
           const match = /(\d) (.+)/gm.exec(inside)
 
           contents[match[2]] = parseInt(match[1])
@@ -61,7 +64,7 @@ class AdventOfCode extends BaseAdventOfCode
 
     let result = 0
     for (const bag of this.allBags) {
-      if (bag !== 'shiny gold' && this.canHold(bag, 'shiny gold')) {
+      if (bag !== "shiny gold" && this.canHold(bag, "shiny gold")) {
         result++
       }
     }
@@ -70,4 +73,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('demo_1').run()
+new AdventOfCode("demo_1").run()

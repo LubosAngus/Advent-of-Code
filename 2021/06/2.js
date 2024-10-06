@@ -1,7 +1,6 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
 
@@ -9,7 +8,7 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   parseInput(data) {
-    return data.split(',').map(Number)
+    return data.split(",").map(Number)
   }
 
   callback() {
@@ -17,7 +16,7 @@ class AdventOfCode extends BaseAdventOfCode
     for (let fish = 0; fish < 7; fish++) {
       fishProduction[fish] = {
         count: 0,
-        queue: 0
+        queue: 0,
       }
     }
 
@@ -40,10 +39,11 @@ class AdventOfCode extends BaseAdventOfCode
       fishProduction[productionDay].count += fishToActivate
     }
 
-    return Object.values(fishProduction).reduce((acc, fish) => {
-      return acc + fish.count + fish.queue
-    }, 0)
+    return Object.values(fishProduction).reduce(
+      (acc, fish) => acc + fish.count + fish.queue,
+      0,
+    )
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

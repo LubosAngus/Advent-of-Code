@@ -1,7 +1,6 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
@@ -10,10 +9,7 @@ class AdventOfCode extends BaseAdventOfCode
     let race
 
     for (let index = 0; index < this.input.length; index++) {
-      const line = this
-        .input[index]
-        .replace(/ +/gm, '')
-        .split(':')[1]
+      const line = this.input[index].replace(/ +/gm, "").split(":")[1]
 
       if (index === 0) {
         race = {
@@ -21,7 +17,7 @@ class AdventOfCode extends BaseAdventOfCode
         }
       } else {
         race = {
-          ...(race),
+          ...race,
           record: Number(line),
         }
       }
@@ -43,4 +39,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

@@ -1,14 +1,13 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
 
   callback() {
     const numbers = this.input.map((line) => {
-      const numbers = line.replace(/[^0-9]/g, '')
+      const numbers = line.replace(/[^0-9]/g, "")
       const first = numbers[0]
       const last = numbers[numbers.length - 1]
 
@@ -19,4 +18,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

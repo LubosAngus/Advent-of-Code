@@ -1,16 +1,19 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.answer = 0
-    this.required = ['byr:','iyr:','eyr:','hgt:','hcl:','ecl:','pid:']
+    this.required = ["byr:", "iyr:", "eyr:", "hgt:", "hcl:", "ecl:", "pid:"]
   }
 
   parseInput(data) {
-    return data.trim().replace(/^(.{1,})\n/gm, `$1 `).split('\n').filter(value => value)
+    return data
+      .trim()
+      .replace(/^(.{1,})\n/gm, `$1 `)
+      .split("\n")
+      .filter((value) => value)
   }
 
   validate(passport) {
@@ -22,12 +25,12 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   callback() {
-    this.input.forEach(passport => {
-        if (this.validate(passport)) this.answer++
+    this.input.forEach((passport) => {
+      if (this.validate(passport)) this.answer++
     })
 
     return this.answer
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

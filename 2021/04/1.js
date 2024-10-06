@@ -1,13 +1,12 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class Board
-{
+class Board {
   static coordsStringify(coords) {
-    return coords.join(',')
+    return coords.join(",")
   }
 
   static coordsParse(coords) {
-    return coords.split(',')
+    return coords.split(",")
   }
 
   constructor(board) {
@@ -15,15 +14,20 @@ class Board
     this.score = null
     this.markedRows = Array.from(new Array(5), () => [])
     this.markedColumns = Array.from(new Array(5), () => [])
-    this.board = board.replaceAll('  ', ' ').split('\n').map((row) => {
-      return row.trim().split(' ').map(Number)
-    }).reduce((accumulator, row, rowIndex) => {
-      for (let colIndex = 0; colIndex < row.length; colIndex++) {
-        accumulator[row[colIndex]] = Board.coordsStringify([rowIndex, colIndex])
-      }
+    this.board = board
+      .replaceAll("  ", " ")
+      .split("\n")
+      .map((row) => row.trim().split(" ").map(Number))
+      .reduce((accumulator, row, rowIndex) => {
+        for (let colIndex = 0; colIndex < row.length; colIndex++) {
+          accumulator[row[colIndex]] = Board.coordsStringify([
+            rowIndex,
+            colIndex,
+          ])
+        }
 
-      return accumulator
-    }, {})
+        return accumulator
+      }, {})
   }
 
   /**
@@ -42,7 +46,8 @@ class Board
 
     delete this.board[number]
 
-    this.hasBingo = this.markedRows[row].length === 5 || this.markedColumns[col].length === 5
+    this.hasBingo =
+      this.markedRows[row].length === 5 || this.markedColumns[col].length === 5
 
     if (this.hasBingo) {
       this.calculateScore(number)
@@ -52,14 +57,16 @@ class Board
   }
 
   calculateScore(drawnNumber) {
-    const unmarkedSum = Object.keys(this.board).reduce((sum, number) => (sum + parseInt(number)), 0)
+    const unmarkedSum = Object.keys(this.board).reduce(
+      (sum, number) => sum + parseInt(number),
+      0,
+    )
 
     this.score = unmarkedSum * drawnNumber
   }
 }
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
 
@@ -68,19 +75,18 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   parseInput(data) {
-    let { numbers, boards } = /(?<numbers>^.*?\n)\n(?<boards>.*)/gs.exec(data).groups
+    let { numbers, boards } = /(?<numbers>^.*?\n)\n(?<boards>.*)/gs.exec(
+      data,
+    ).groups
 
-    this.numbers = numbers.split(',').map(Number)
-    this.boards = boards.split(/\n\n/).map((board) => {
-      return new Board(board)
-    })
+    this.numbers = numbers.split(",").map(Number)
+    this.boards = boards.split(/\n\n/).map((board) => new Board(board))
   }
 
   callback() {
     let winningBoard = null
 
-    drawingLoop:
-    for (const drawnNumber of this.numbers) {
+    drawingLoop: for (const drawnNumber of this.numbers) {
       for (const board of this.boards) {
         const hasBingo = board.markNumber(drawnNumber)
 
@@ -96,4 +102,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

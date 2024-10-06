@@ -1,8 +1,7 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.results = []
@@ -20,44 +19,52 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   removeBrackets(numbersString) {
-    if (!numbersString.includes('(')) {
+    if (!numbersString.includes("(")) {
       return this.calculateNumbers(numbersString)
     }
 
-    const match = /\(((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*)\)/.exec(numbersString)
+    const match = /\(((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*)\)/.exec(
+      numbersString,
+    )
     const toReplace = match[0]
     let toCalculate = match[1]
 
-    if (toCalculate.includes('(')) {
+    if (toCalculate.includes("(")) {
       toCalculate = this.removeBrackets(toCalculate)
     }
 
-    numbersString = numbersString.replace(toReplace, this.calculateNumbers(toCalculate))
+    numbersString = numbersString.replace(
+      toReplace,
+      this.calculateNumbers(toCalculate),
+    )
     numbersString = this.removeBrackets(numbersString)
 
     return numbersString
   }
 
   calculateNumbers(numbers) {
-    if (typeof numbers !== 'string') return numbers
+    if (typeof numbers !== "string") return numbers
 
-    return numbers.split(' ').reduce((accumulator, current) => {
-      accumulator.toCalc.push(current)
+    return numbers.split(" ").reduce(
+      (accumulator, current) => {
+        accumulator.toCalc.push(current)
 
-      if (accumulator.toCalc.length == 3) {
-        accumulator.result = eval(accumulator.toCalc.join(''))
-        accumulator.toCalc = [accumulator.result]
-      }
+        if (accumulator.toCalc.length == 3) {
+          accumulator.result = eval(accumulator.toCalc.join(""))
+          accumulator.toCalc = [accumulator.result]
+        }
 
-      return accumulator
-    }, {
-      result: 0,
-      toCalc: []
-    }).result
+        return accumulator
+      },
+      {
+        result: 0,
+        toCalc: [],
+      },
+    ).result
   }
 
   callback() {
-    for (const line of this.input.split('\n')) {
+    for (const line of this.input.split("\n")) {
       this.results.push(this.removeBrackets(line))
     }
 
@@ -65,4 +72,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

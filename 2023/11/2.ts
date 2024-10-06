@@ -1,17 +1,23 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+type Galaxy = {
+  row: number
+  col: number
+}
+
+class AdventOfCode extends BaseAdventOfCode {
+  input: string[]
+
   constructor(inputFileName) {
     super(inputFileName)
   }
 
   getGalaxies() {
-    const galaxiesLocations = []
+    const galaxiesLocations = [] as Galaxy[]
 
     for (const [rowIndex, row] of Object.entries(this.input)) {
       for (const [colIndex, cell] of Object.entries(row)) {
-        if (cell !== '#') continue
+        if (cell !== "#") continue
 
         galaxiesLocations.push({
           row: Number(rowIndex),
@@ -38,13 +44,13 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   getRowsToExpand(galaxies) {
-    const rowsWithGalaxies = galaxies.map(g => g.row)
+    const rowsWithGalaxies = galaxies.map((g) => g.row)
 
     return this.getToExpand(rowsWithGalaxies, this.input.length)
   }
 
   getColsToExpand(galaxies) {
-    const colsWithGalaxies = galaxies.map(g => g.col)
+    const colsWithGalaxies = galaxies.map((g) => g.col)
 
     return this.getToExpand(colsWithGalaxies, this.input[0].length)
   }
@@ -64,27 +70,38 @@ class AdventOfCode extends BaseAdventOfCode
     return expansion
   }
 
-  expandUniverseByFactor(galaxies, factor) {
+  expandUniverseByFactor(
+    galaxies: ReturnType<AdventOfCode["getGalaxies"]>,
+    factor: number,
+  ) {
     const rowsToExpand = this.getRowsToExpand(galaxies)
     const colsToExpand = this.getColsToExpand(galaxies)
 
-    return galaxies.map(galaxy => {
-      const rowExpansion = this.calculateExpansion(Object.keys(rowsToExpand), galaxy.row, factor)
-      const colExpansion = this.calculateExpansion(Object.keys(colsToExpand), galaxy.col, factor)
+    return galaxies.map((galaxy) => {
+      const rowExpansion = this.calculateExpansion(
+        Object.keys(rowsToExpand),
+        galaxy.row,
+        factor,
+      )
+      const colExpansion = this.calculateExpansion(
+        Object.keys(colsToExpand),
+        galaxy.col,
+        factor,
+      )
 
       return {
         row: galaxy.row + rowExpansion,
-        col: galaxy.col + colExpansion
+        col: galaxy.col + colExpansion,
       }
     })
   }
 
-  getGalaxyPairs(galaxies) {
-    const pairs = []
+  getGalaxyPairs(galaxies: ReturnType<AdventOfCode["getGalaxies"]>) {
+    const pairs = [] as number[][]
     const galaxyCount = Object.keys(galaxies).length
 
     for (let x = 0; x < galaxyCount; x++) {
-      for (let y = x ; y < galaxyCount; y++) {
+      for (let y = x; y < galaxyCount; y++) {
         if (x === y) {
           continue
         }
@@ -96,7 +113,10 @@ class AdventOfCode extends BaseAdventOfCode
     return pairs
   }
 
-  getShortestPathsSum(galaxies, galaxyPairs) {
+  getShortestPathsSum(
+    galaxies: ReturnType<AdventOfCode["getGalaxies"]>,
+    galaxyPairs: ReturnType<AdventOfCode["getGalaxyPairs"]>,
+  ) {
     // Also can be written like this, but I don't think it's very human readable
     // return galaxyPairs.reduce((sum, [i, j]) => {
     //   return sum + this.getManhattanDistance(galaxies[i], galaxies[j]);
@@ -108,14 +128,14 @@ class AdventOfCode extends BaseAdventOfCode
     for (const galaxyPair of galaxyPairs) {
       shortestPathsSum += this.getManhattanDistance(
         galaxies[galaxyPair[0]],
-        galaxies[galaxyPair[1]]
+        galaxies[galaxyPair[1]],
       )
     }
 
     return shortestPathsSum
   }
 
-  getManhattanDistance(galaxy1, galaxy2) {
+  getManhattanDistance(galaxy1: Galaxy, galaxy2: Galaxy) {
     const rowDistance = Math.abs(galaxy2.row - galaxy1.row)
     const colDistance = Math.abs(galaxy2.col - galaxy1.col)
 
@@ -126,10 +146,13 @@ class AdventOfCode extends BaseAdventOfCode
     const galaxies = this.getGalaxies()
     const galaxiesExpanded = this.expandUniverseByFactor(galaxies, 1000000)
     const galaxyPairs = this.getGalaxyPairs(galaxiesExpanded)
-    const shortestPathsSum = this.getShortestPathsSum(galaxiesExpanded, galaxyPairs)
+    const shortestPathsSum = this.getShortestPathsSum(
+      galaxiesExpanded,
+      galaxyPairs,
+    )
 
     return shortestPathsSum
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

@@ -1,8 +1,7 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.spoken = []
@@ -18,7 +17,7 @@ class AdventOfCode extends BaseAdventOfCode
     // return [2,3,1] // 78
     // return [3,2,1] // 438
     // return [3,1,2] // 1836
-    return data.split(',').map(Number)
+    return data.split(",").map(Number)
   }
 
   getCurrentNumber(turn) {
@@ -29,7 +28,10 @@ class AdventOfCode extends BaseAdventOfCode
     }
 
     if (this.spokenNumbers[this.lastSpoken]?.secondToLastTurn) {
-      return this.spokenNumbers[this.lastSpoken].lastTurn - this.spokenNumbers[this.lastSpoken].secondToLastTurn
+      return (
+        this.spokenNumbers[this.lastSpoken].lastTurn -
+        this.spokenNumbers[this.lastSpoken].secondToLastTurn
+      )
     }
 
     return 0
@@ -38,11 +40,11 @@ class AdventOfCode extends BaseAdventOfCode
   memorizeSpoken(number, turn) {
     let spoken = this.spokenNumbers[number]
 
-    if (typeof spoken === 'undefined') {
+    if (typeof spoken === "undefined") {
       spoken = {
         lastTurn: turn,
         secondToLastTurn: null,
-        count: 0
+        count: 0,
       }
     }
 
@@ -74,4 +76,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

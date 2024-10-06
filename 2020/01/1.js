@@ -1,8 +1,7 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.inputAsInt = true
@@ -10,8 +9,8 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   callback() {
-    this.input.forEach(first => {
-      this.input.forEach(second => {
+    this.input.forEach((first) => {
+      this.input.forEach((second) => {
         if (first + second == 2020) {
           this.answer = first * second
         }
@@ -22,4 +21,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

@@ -1,8 +1,7 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.possibleDifferences = [1, 2, 3]
@@ -10,7 +9,12 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   parseInput(data) {
-    this.input = data.trim().split('\n').filter(value => value).map(value => parseInt(value)).sort((a, b) => a - b)
+    this.input = data
+      .trim()
+      .split("\n")
+      .filter((value) => value)
+      .map((value) => parseInt(value))
+      .sort((a, b) => a - b)
     this.input.unshift(0)
     this.input.push(this.input[this.input.length - 1] + 3)
 
@@ -18,7 +22,7 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   addJoltage(joltage) {
-    if (typeof this.joltages[joltage] === 'undefined') {
+    if (typeof this.joltages[joltage] === "undefined") {
       this.joltages[joltage] = 0
     }
 
@@ -27,10 +31,10 @@ class AdventOfCode extends BaseAdventOfCode
 
   callback() {
     for (let index = 0; index < this.input.length; index++) {
-      if (typeof this.input[index + 1] === 'undefined') continue
+      if (typeof this.input[index + 1] === "undefined") continue
 
-      const currJoltage = this.input[index];
-      const nextJoltage = this.input[index + 1];
+      const currJoltage = this.input[index]
+      const nextJoltage = this.input[index + 1]
 
       for (let j = 0; j < this.possibleDifferences.length; j++) {
         if (currJoltage + this.possibleDifferences[j] === nextJoltage) {
@@ -44,4 +48,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

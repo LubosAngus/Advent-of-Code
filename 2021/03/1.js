@@ -1,7 +1,6 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
@@ -9,9 +8,7 @@ class AdventOfCode extends BaseAdventOfCode
   parseInput(data) {
     data = super.parseInput(data)
 
-    return data.map((number) => {
-      return number.split('').map(Number)
-    })
+    return data.map((number) => number.split("").map(Number))
   }
 
   callback() {
@@ -26,8 +23,8 @@ class AdventOfCode extends BaseAdventOfCode
       }
     }
 
-    let gamma = ''
-    let epsilon = ''
+    let gamma = ""
+    let epsilon = ""
     for (const bit of bits) {
       gamma += bit[0] < bit[1] ? 1 : 0
       epsilon += bit[0] > bit[1] ? 1 : 0
@@ -37,4 +34,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

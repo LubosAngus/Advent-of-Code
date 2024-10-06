@@ -1,7 +1,6 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
@@ -10,11 +9,21 @@ class AdventOfCode extends BaseAdventOfCode
     let finalScore = 0
 
     for (const line of this.input) {
-      const regex = /Card (?<cardId>[0-9 ]+): (?<winning>.+) \| (?<yours>.+)/gm;
-      let { groups: { cardId, winning, yours } } = regex.exec(line)
+      const regex = /Card (?<cardId>[0-9 ]+): (?<winning>.+) \| (?<yours>.+)/gm
+      let {
+        groups: { _cardId, winning, yours },
+      } = regex.exec(line)
 
-      winning = winning.trim().split(' ').filter(v => v).map(Number)
-      yours = yours.trim().split(' ').filter(v => v).map(Number)
+      winning = winning
+        .trim()
+        .split(" ")
+        .filter((v) => v)
+        .map(Number)
+      yours = yours
+        .trim()
+        .split(" ")
+        .filter((v) => v)
+        .map(Number)
 
       const yourWinning = []
       for (const y of yours) {
@@ -25,7 +34,7 @@ class AdventOfCode extends BaseAdventOfCode
 
       let tmpScore = 0
       for (let index = 0; index < yourWinning.length; index++) {
-        tmpScore = (tmpScore * 2) || 1
+        tmpScore = tmpScore * 2 || 1
       }
 
       finalScore += tmpScore
@@ -35,4 +44,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

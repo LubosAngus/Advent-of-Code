@@ -1,18 +1,16 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class Coords
-{
+class Coords {
   static stringify(coords) {
-    return coords.join(',')
+    return coords.join(",")
   }
 
   static parse(coords) {
-    return coords.split(',').map(Number)
+    return coords.split(",").map(Number)
   }
 }
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
@@ -22,8 +20,8 @@ class AdventOfCode extends BaseAdventOfCode
 
     return data.map((item) => {
       const { start, end } = /(?<start>.*) -> (?<end>.*)/gm.exec(item).groups
-      const [ x1, y1 ] = Coords.parse(start)
-      const [ x2, y2 ] = Coords.parse(end)
+      const [x1, y1] = Coords.parse(start)
+      const [x2, y2] = Coords.parse(end)
 
       return { x1, y1, x2, y2 }
     })
@@ -33,7 +31,7 @@ class AdventOfCode extends BaseAdventOfCode
     const diagram = new Map()
 
     // DDA Algorithm
-    for (const { x1, y1, x2, y2 } of this.input){
+    for (const { x1, y1, x2, y2 } of this.input) {
       const dx = x2 - x1
       const dy = y2 - y1
       const len = Math.abs(dx) > Math.abs(dy) ? Math.abs(dx) : Math.abs(dy)
@@ -43,7 +41,7 @@ class AdventOfCode extends BaseAdventOfCode
       let y = y1
 
       for (let i = 0; i <= len; i++) {
-        const coords = Coords.stringify([x,y])
+        const coords = Coords.stringify([x, y])
         const value = (parseInt(diagram.get(coords)) || 0) + 1
 
         diagram.set(coords, value)
@@ -63,4 +61,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

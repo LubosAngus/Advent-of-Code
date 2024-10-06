@@ -1,8 +1,7 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.shipPosition = { x: 0, y: 0 }
@@ -12,21 +11,30 @@ class AdventOfCode extends BaseAdventOfCode
       E: () => 90,
       S: () => 180,
       W: () => 270,
-      F: () => Math.abs((this.shipDegrees + (this.shipDegrees < 0 ? 360 : 0)) % 360)
+      F: () =>
+        Math.abs((this.shipDegrees + (this.shipDegrees < 0 ? 360 : 0)) % 360),
     }
   }
 
   moveShip(direction, value) {
     switch (this.degreesMap[direction]()) {
-      case 0   : this.shipPosition.y += value ; break
-      case 90  : this.shipPosition.x += value ; break
-      case 180 : this.shipPosition.y -= value ; break
-      case 270 : this.shipPosition.x -= value ; break
+      case 0:
+        this.shipPosition.y += value
+        break
+      case 90:
+        this.shipPosition.x += value
+        break
+      case 180:
+        this.shipPosition.y -= value
+        break
+      case 270:
+        this.shipPosition.x -= value
+        break
     }
   }
 
   rotateShip(direction, degrees) {
-    this.shipDegrees = this.shipDegrees + degrees * (direction == 'L' ? -1 : 1)
+    this.shipDegrees = this.shipDegrees + degrees * (direction == "L" ? -1 : 1)
   }
 
   callback() {
@@ -35,12 +43,14 @@ class AdventOfCode extends BaseAdventOfCode
       const value = parseInt(instruction.slice(1))
 
       switch (action) {
-        case 'L':
-        case 'R':
-          this.rotateShip(action, value); break
+        case "L":
+        case "R":
+          this.rotateShip(action, value)
+          break
 
         default:
-          this.moveShip(action, value); break
+          this.moveShip(action, value)
+          break
       }
     }
 
@@ -48,4 +58,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

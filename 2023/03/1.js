@@ -1,7 +1,6 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
@@ -43,8 +42,8 @@ class AdventOfCode extends BaseAdventOfCode
     }
 
     return {
-      number: numbersRaw.map(n => n.number).join(''),
-      position: numbersRaw.map(n => `${n.x}-${n.y}`).join(';'),
+      number: numbersRaw.map((n) => n.number).join(""),
+      position: numbersRaw.map((n) => `${n.x}-${n.y}`).join(";"),
     }
   }
 
@@ -71,11 +70,13 @@ class AdventOfCode extends BaseAdventOfCode
 
     for (let x = 0; x < this.input.length; x++) {
       for (let y = 0; y < this.input[x].length; y++) {
-        if (this.input[x][y] === '.') continue
+        if (this.input[x][y] === ".") continue
         if (this.isNumber(x, y)) continue
 
         for (const adjacentNumber of this.findAdjacentNumbers(x, y)) {
-          allAdjacentNumbers[adjacentNumber.position] = parseInt(adjacentNumber.number)
+          allAdjacentNumbers[adjacentNumber.position] = parseInt(
+            adjacentNumber.number,
+          )
         }
       }
     }
@@ -84,4 +85,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

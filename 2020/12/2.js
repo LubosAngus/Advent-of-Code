@@ -1,8 +1,7 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.waypointOffset = { x: 10, y: 1 }
@@ -11,10 +10,18 @@ class AdventOfCode extends BaseAdventOfCode
 
   moveWaypoint(direction, value) {
     switch (direction) {
-      case 'N' : this.waypointOffset.y += value; break
-      case 'E' : this.waypointOffset.x += value; break
-      case 'S' : this.waypointOffset.y -= value; break
-      case 'W' : this.waypointOffset.x -= value; break
+      case "N":
+        this.waypointOffset.y += value
+        break
+      case "E":
+        this.waypointOffset.x += value
+        break
+      case "S":
+        this.waypointOffset.y -= value
+        break
+      case "W":
+        this.waypointOffset.x -= value
+        break
     }
   }
 
@@ -26,23 +33,23 @@ class AdventOfCode extends BaseAdventOfCode
   rotateWaypoint(direction, degrees) {
     let { x, y } = { ...this.waypointOffset }
 
-    if (direction == 'R' && degrees != 180) {
+    if (direction == "R" && degrees != 180) {
       x = -x
       y = -y
     }
 
     switch (degrees) {
-      case 90 :
+      case 90:
         this.waypointOffset.x = -y
         this.waypointOffset.y = +x
         break
 
-      case 180 :
+      case 180:
         this.waypointOffset.x = -x
         this.waypointOffset.y = -y
         break
 
-      case 270 :
+      case 270:
         this.waypointOffset.x = +y
         this.waypointOffset.y = -x
         break
@@ -55,15 +62,18 @@ class AdventOfCode extends BaseAdventOfCode
       const value = parseInt(instruction.slice(1))
 
       switch (action) {
-        case 'F':
-          this.moveShip(value); break
+        case "F":
+          this.moveShip(value)
+          break
 
-        case 'L':
-        case 'R':
-          this.rotateWaypoint(action, value); break
+        case "L":
+        case "R":
+          this.rotateWaypoint(action, value)
+          break
 
         default:
-          this.moveWaypoint(action, value); break
+          this.moveWaypoint(action, value)
+          break
       }
     }
 
@@ -71,4 +81,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

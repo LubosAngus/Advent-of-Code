@@ -1,7 +1,6 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
@@ -10,8 +9,10 @@ class AdventOfCode extends BaseAdventOfCode
     const games = []
 
     for (const line of this.input) {
-      const regex = /Game (?<gameId>\d+): (?<game>.*)/gm;
-      const { groups: { gameId, game } } = regex.exec(line)
+      const regex = /Game (?<gameId>\d+): (?<game>.*)/gm
+      const {
+        groups: { gameId, game },
+      } = regex.exec(line)
 
       const maxColors = {
         red: 0,
@@ -19,8 +20,8 @@ class AdventOfCode extends BaseAdventOfCode
         blue: 0,
       }
 
-      const rounds = game.split('; ').map((round) => {
-        const items = round.split(', ')
+      const rounds = game.split("; ").map((round) => {
+        const items = round.split(", ")
         const colors = {
           red: 0,
           green: 0,
@@ -28,7 +29,7 @@ class AdventOfCode extends BaseAdventOfCode
         }
 
         for (const item of items) {
-          const [value, color] = item.split(' ')
+          const [value, color] = item.split(" ")
 
           colors[color] = parseInt(value)
 
@@ -38,7 +39,7 @@ class AdventOfCode extends BaseAdventOfCode
         }
 
         return colors
-      });
+      })
 
       games.push({
         gameId: parseInt(gameId),
@@ -53,13 +54,14 @@ class AdventOfCode extends BaseAdventOfCode
       blue: 14,
     }
 
-    let result = 0;
+    let result = 0
     for (const game of games) {
       if (
-        game.maxColors.red > maxGoal.red
-        || game.maxColors.green > maxGoal.green
-        || game.maxColors.blue > maxGoal.blue
-      ) continue
+        game.maxColors.red > maxGoal.red ||
+        game.maxColors.green > maxGoal.green ||
+        game.maxColors.blue > maxGoal.blue
+      )
+        continue
 
       result += game.gameId
     }
@@ -68,4 +70,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

@@ -1,8 +1,7 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.hasChanged = false
@@ -10,16 +9,22 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   parseInput(data) {
-    return data.trim().split('\n').filter(value => value).map(value => value.split(''))
+    return data
+      .trim()
+      .split("\n")
+      .filter((value) => value)
+      .map((value) => value.split(""))
   }
 
   cloneInput() {
     this.updatedInput = JSON.parse(JSON.stringify(this.input))
   }
 
-  isDefined = (i,j) => typeof this.input[i] !== 'undefined' && typeof this.input[i][j] !== 'undefined'
-  isEmpty = (s) => (s === 'L')
-  isOccupied = (s) => (s === '#')
+  isDefined = (i, j) =>
+    typeof this.input[i] !== "undefined" &&
+    typeof this.input[i][j] !== "undefined"
+  isEmpty = (s) => s === "L"
+  isOccupied = (s) => s === "#"
 
   updateSeat(i, j, value) {
     this.updatedInput[i][j] = value
@@ -29,16 +34,16 @@ class AdventOfCode extends BaseAdventOfCode
   countSeats() {
     for (let i = 0; i < this.input.length; i++) {
       for (let j = 0; j < this.input[i].length; j++) {
-        if (this.input[i][j] === '#') this.answer++
+        if (this.input[i][j] === "#") this.answer++
       }
     }
   }
 
   logInput() {
-    console.log('\n')
+    console.log("\n")
 
     for (let i = 0; i < this.input.length; i++) {
-      console.log(this.input[i].join(''))
+      console.log(this.input[i].join(""))
     }
   }
 
@@ -55,11 +60,10 @@ class AdventOfCode extends BaseAdventOfCode
         if (isEmpty || isOccupied) {
           let occupiedAdjacent = 0
 
-          loopAdjacent:
-          for (let k = i-1; k <= i+1; k++) {
-            for (let l = j-1; l <= j+1; l++) {
+          loopAdjacent: for (let k = i - 1; k <= i + 1; k++) {
+            for (let l = j - 1; l <= j + 1; l++) {
               if (occupiedAdjacent > 5) break loopAdjacent
-              if (!this.isDefined(k,l) || this.input[k][l] === '.') continue
+              if (!this.isDefined(k, l) || this.input[k][l] === ".") continue
 
               if (this.isOccupied(this.input[k][l])) {
                 occupiedAdjacent++
@@ -67,8 +71,8 @@ class AdventOfCode extends BaseAdventOfCode
             }
           }
 
-          if (isEmpty && occupiedAdjacent === 0) this.updateSeat(i, j, '#')
-          if (isOccupied && occupiedAdjacent >= 5) this.updateSeat(i, j, 'L')
+          if (isEmpty && occupiedAdjacent === 0) this.updateSeat(i, j, "#")
+          if (isOccupied && occupiedAdjacent >= 5) this.updateSeat(i, j, "L")
         }
       }
     }
@@ -88,4 +92,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('demo').run()
+new AdventOfCode("demo").run()

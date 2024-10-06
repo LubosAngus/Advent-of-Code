@@ -1,7 +1,6 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
@@ -9,9 +8,9 @@ class AdventOfCode extends BaseAdventOfCode
   getSeeds() {
     return this.input
       .shift()
-      .split(' ')
+      .split(" ")
       .map(Number)
-      .filter(v => !isNaN(v))
+      .filter((v) => !isNaN(v))
   }
 
   getMaps() {
@@ -34,11 +33,11 @@ class AdventOfCode extends BaseAdventOfCode
         }
       }
 
-      const [destination, source, range] = line.split(' ')
+      const [destination, source, range] = line.split(" ")
 
-      maps[lineIndex]['destinations'][valueIndex] = Number(destination)
-      maps[lineIndex]['sources'][valueIndex] = Number(source)
-      maps[lineIndex]['ranges'][valueIndex] = Number(range)
+      maps[lineIndex]["destinations"][valueIndex] = Number(destination)
+      maps[lineIndex]["sources"][valueIndex] = Number(source)
+      maps[lineIndex]["ranges"][valueIndex] = Number(range)
 
       valueIndex++
     }
@@ -107,4 +106,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

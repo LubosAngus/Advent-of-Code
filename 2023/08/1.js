@@ -1,7 +1,6 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
@@ -9,8 +8,8 @@ class AdventOfCode extends BaseAdventOfCode
   getInstructions() {
     return this.input
       .shift()
-      .split('')
-      .map(i => i === 'L' ? 0 : 1)
+      .split("")
+      .map((i) => (i === "L" ? 0 : 1))
   }
 
   getMap() {
@@ -33,10 +32,10 @@ class AdventOfCode extends BaseAdventOfCode
     const map = this.getMap()
 
     let instructionIndex = 0
-    let currentKey = 'AAA'
+    let currentKey = "AAA"
     let steps = 0
 
-    while (currentKey !== 'ZZZ') {
+    while (currentKey !== "ZZZ") {
       const currentInstruction = instructions[instructionIndex]
       instructionIndex = (instructionIndex + 1) % instructions.length
       currentKey = map[currentKey][currentInstruction]
@@ -47,4 +46,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

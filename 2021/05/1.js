@@ -1,18 +1,16 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class Coords
-{
+class Coords {
   static stringify(coords) {
-    return coords.join(',')
+    return coords.join(",")
   }
 
   static parse(coords) {
-    return coords.split(',').map(Number)
+    return coords.split(",").map(Number)
   }
 }
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
@@ -20,32 +18,24 @@ class AdventOfCode extends BaseAdventOfCode
   parseInput(data) {
     data = super.parseInput(data)
 
-    return data.map((item) => {
-      const { start, end } = /(?<start>.*) -> (?<end>.*)/gm.exec(item).groups
-      const [ x1, y1 ] = Coords.parse(start)
-      const [ x2, y2 ] = Coords.parse(end)
+    return data
+      .map((item) => {
+        const { start, end } = /(?<start>.*) -> (?<end>.*)/gm.exec(item).groups
+        const [x1, y1] = Coords.parse(start)
+        const [x2, y2] = Coords.parse(end)
 
-      return { x1, y1, x2, y2 }
-    }).filter(({ x1, y1, x2, y2 }) => {
-      return x1 == x2 || y1 == y2
-    })
+        return { x1, y1, x2, y2 }
+      })
+      .filter(({ x1, y1, x2, y2 }) => x1 == x2 || y1 == y2)
   }
 
   callback() {
     const diagram = new Map()
 
     for (const { x1, y1, x2, y2 } of this.input) {
-      for (
-        let x = x1;
-        x1 <= x2 ? x <= x2 : x >= x2;
-        x1 <= x2 ? x++ : x--
-      ) {
-        for (
-          let y = y1;
-          y1 <= y2 ? y <= y2 : y >= y2;
-          y1 <= y2 ? y++ : y--
-        ) {
-          const coords = Coords.stringify([x,y])
+      for (let x = x1; x1 <= x2 ? x <= x2 : x >= x2; x1 <= x2 ? x++ : x--) {
+        for (let y = y1; y1 <= y2 ? y <= y2 : y >= y2; y1 <= y2 ? y++ : y--) {
+          const coords = Coords.stringify([x, y])
 
           let value = parseInt(diagram.get(coords)) || 0
           value++
@@ -92,4 +82,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

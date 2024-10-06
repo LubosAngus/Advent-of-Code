@@ -1,8 +1,7 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
-  constructor (inputFileName) {
+class AdventOfCode extends BaseAdventOfCode {
+  constructor(inputFileName) {
     super(inputFileName)
 
     this.answers = []
@@ -16,7 +15,7 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   callback() {
-    this.slopes.forEach(slope => {
+    this.slopes.forEach((slope) => {
       let j = 0
       let answer = 0
       const overflow = this.input[0].length
@@ -30,16 +29,16 @@ class AdventOfCode extends BaseAdventOfCode
 
         const possibleTree = this.input[i][j]
 
-        if (possibleTree == '#') {
+        if (possibleTree == "#") {
           answer++
         }
       }
 
       this.answers.push(answer)
-    });
+    })
 
-    return eval(this.answers.join(' * '))
+    return eval(this.answers.join(" * "))
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

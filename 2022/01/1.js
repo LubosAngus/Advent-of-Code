@@ -1,14 +1,21 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.js"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
 
   parseInput(data) {
-    data = data.trim().split('\n\n').filter(value => value)
-    data = data.map(value => value.trim().split('\n').map(value => parseInt(value)))
+    data = data
+      .trim()
+      .split("\n\n")
+      .filter((value) => value)
+    data = data.map((value) =>
+      value
+        .trim()
+        .split("\n")
+        .map((value) => parseInt(value)),
+    )
 
     return data
   }
@@ -28,4 +35,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

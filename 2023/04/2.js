@@ -1,23 +1,31 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
 
   callback() {
     const linesCount = Array(this.input.length).fill(1)
-    let finalScore = 0
 
     for (let cardNumber = 0; cardNumber < this.input.length; cardNumber++) {
-      const line = this.input[cardNumber];
+      const line = this.input[cardNumber]
 
-      const regex = /.+: (?<winning>.+) \| (?<yours>.+)/gm;
-      let { groups: { winning, yours } } = regex.exec(line)
+      const regex = /.+: (?<winning>.+) \| (?<yours>.+)/gm
+      let {
+        groups: { winning, yours },
+      } = regex.exec(line)
 
-      winning = winning.trim().split(' ').filter(v => v).map(Number)
-      yours = yours.trim().split(' ').filter(v => v).map(Number)
+      winning = winning
+        .trim()
+        .split(" ")
+        .filter((v) => v)
+        .map(Number)
+      yours = yours
+        .trim()
+        .split(" ")
+        .filter((v) => v)
+        .map(Number)
 
       const yourWinning = []
       for (const y of yours) {
@@ -31,8 +39,8 @@ class AdventOfCode extends BaseAdventOfCode
       }
     }
 
-    return linesCount.reduce((a,b) => a + b)
+    return linesCount.reduce((a, b) => a + b)
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

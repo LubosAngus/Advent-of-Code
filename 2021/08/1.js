@@ -1,7 +1,6 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
@@ -9,12 +8,12 @@ class AdventOfCode extends BaseAdventOfCode
   parseInput(data) {
     data = data
       .trim()
-      .split('\n')
-      .filter(value => value)
+      .split("\n")
+      .filter((value) => value)
       .map((val) => {
-        const [signalPatterns, outputValue] = val.split(' | ')
+        const outputValue = val.split(" | ")[1]
 
-        return outputValue.split(' ')
+        return outputValue.split(" ")
       })
 
     return data
@@ -41,4 +40,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

@@ -1,13 +1,11 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
 
-  callback() {
-  }
+  callback() {}
 }
 
-new AdventOfCode('demo').run()
+new AdventOfCode("demo").run()

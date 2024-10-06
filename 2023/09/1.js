@@ -1,7 +1,6 @@
-import { AdventOfCode as BaseAdventOfCode } from '../../AdventOfCode.js'
+import { AdventOfCode as BaseAdventOfCode } from "../../AdventOfCode.ts"
 
-class AdventOfCode extends BaseAdventOfCode
-{
+class AdventOfCode extends BaseAdventOfCode {
   constructor(inputFileName) {
     super(inputFileName)
   }
@@ -10,8 +9,7 @@ class AdventOfCode extends BaseAdventOfCode
     let currentSteps = value
     let steps = [value]
 
-
-    while (!currentSteps.every(value => value === 0)) {
+    while (!currentSteps.every((value) => value === 0)) {
       const nextSteps = []
 
       for (let index = 0; index < currentSteps.length - 1; index++) {
@@ -43,7 +41,7 @@ class AdventOfCode extends BaseAdventOfCode
   }
 
   callback() {
-    const values = this.input.map(value => value.split(' ').map(Number))
+    const values = this.input.map((value) => value.split(" ").map(Number))
     const nextValues = []
 
     for (const value of values) {
@@ -57,4 +55,4 @@ class AdventOfCode extends BaseAdventOfCode
   }
 }
 
-new AdventOfCode('input').run()
+new AdventOfCode("input").run()

@@ -20,6 +20,8 @@ export default [
           caughtErrorsIgnorePattern: "^_",
         },
       ],
+      "arrow-body-style": ["error", "as-needed"],
+      "no-confusing-arrow": ["error"],
     },
   },
 ]

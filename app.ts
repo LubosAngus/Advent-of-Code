@@ -18,7 +18,10 @@ const clearConsole = (): void => {
 /**
  * Get the list of year directories (folders that match the four-digit year pattern).
  */
-const getYears = (): Array<{ title: string; value: string }> =>
+const getYears = (): Array<{
+  title: string
+  value: string
+}> =>
   readdirSync(process.cwd(), { withFileTypes: true })
     .filter((file) => file.isDirectory() && /\d{4}/.test(file.name))
     .map((file) => ({ title: file.name, value: file.name }))
@@ -27,7 +30,12 @@ const getYears = (): Array<{ title: string; value: string }> =>
 /**
  * Get the list of days within a specific year (folders that match the two-digit day pattern).
  */
-const getDays = (year: string): Array<{ title: string; value: string }> =>
+const getDays = (
+  year: string,
+): Array<{
+  title: string
+  value: string
+}> =>
   readdirSync(`${process.cwd()}/${year}`, { withFileTypes: true })
     .filter(
       (file) =>

@@ -12,7 +12,7 @@ body {
   font-family: "JetBrains Mono";
   color: #b7c5d3;
   background: #171d24;
-  font-size: 14pt;
+  font-size: 13pt;
   line-height: 1.4;
   letter-spacing: -0.15px;
   -webkit-font-smoothing: antialiased;
@@ -21,12 +21,8 @@ body {
 
 @media (max-width: 1365px) {
   body {
-    font-size: 13pt;
+    font-size: 12pt;
   }
-}
-
-code {
-  user-select: all;
 }
 
 pre,

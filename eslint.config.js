@@ -21,7 +21,6 @@ export default [
         },
       ],
       "arrow-body-style": ["error", "as-needed"],
-      "no-confusing-arrow": ["error"],
     },
   },
 ]

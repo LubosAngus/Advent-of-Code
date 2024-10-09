@@ -87,7 +87,7 @@ const askSubmit = (config: {
         `https://adventofcode.com/${config.year}/day/${parseInt(config.day)}?result=${finalResult}`,
       )
 
-      clearConsole()
+      // clearConsole()
       console.log(
         `\n\x1b[32mSubmitting day ${config.day} of year ${config.year} with result: \x1b[0m\x1b[45m${finalResult}\x1b[0m\n`,
       )
@@ -153,12 +153,9 @@ const execute = (config: {
         return
       }
 
-      const resultMatch = stdout.match(/Your result is: (.*)/m)
+      const resultMatch = stdout.match(/COPY_RESULT ---(.*)---/m)
       if (resultMatch) {
-        finalResult = resultMatch[1].replace(
-          /\\u001b\[0m\\u001b\[45m(.*)\\u001b\[0m/,
-          "$1",
-        )
+        finalResult = resultMatch[1]
       }
     },
   )

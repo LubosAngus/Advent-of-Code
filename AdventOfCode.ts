@@ -40,12 +40,13 @@ export class AdventOfCode {
       this.input = this.parseInput(data)
       this.result = this.callback()
 
-      console.log("\n")
       if (this.result !== null) {
+        console.log(`\x1b[8m COPY_RESULT ---${this.result}--- \x1b[0m`)
         console.log(
           `\x1b[36mYour result is: \x1b[0m\x1b[45m${this.result}\x1b[0m`,
         )
       } else {
+        console.log("\n")
         console.log(`\x1b[45mProvide an answer!\x1b[0m`)
       }
 

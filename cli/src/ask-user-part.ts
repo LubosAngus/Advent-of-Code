@@ -39,5 +39,7 @@ export default async (): Promise<void> => {
   global.part = part;
   global.file = file;
 
-  global.hasStar = (stars && part === 1) || (stars === "**" && part === 2);
+  global.hasStarCurrentDay = !!stars;
+  global.hasStarCurrentPart =
+    (stars && part === 1) || (stars === "**" && part === 2);
 };

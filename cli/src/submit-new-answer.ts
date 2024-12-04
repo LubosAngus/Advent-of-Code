@@ -21,11 +21,9 @@ export default async function (result: string): Promise<boolean> {
   const responseText = await response.text();
 
   if (response.status !== 200) {
-    loadingSpinner.fail(
-      chalk.red.bold(response.status) + "\n" + chalk.red(responseText)
-    );
+    loadingSpinner.fail(chalk.red.bold(response.status));
 
-    return;
+    throw new Error(responseText);
   }
 
   const dom = new JSDOM(responseText);

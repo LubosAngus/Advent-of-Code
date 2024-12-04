@@ -13,15 +13,15 @@ export default async (): Promise<void> => {
   let defaultValue = null;
   for (let day = 1; day <= 25; day++) {
     const value = day;
-    const starsCount = global.stars?.[global.year]?.[day];
+    const stars = global.stars?.[global.year]?.[day];
 
     let name = value.toString().padStart(2, "0");
 
-    if (starsCount) {
-      name += ` ${chalk.yellow(starsCount)}`;
+    if (stars) {
+      name += ` ${chalk.yellow(stars)}`;
     }
 
-    if ((defaultValue === null && !starsCount) || starsCount === "*") {
+    if (defaultValue === null && (!stars || stars === "*")) {
       defaultValue = value;
     }
 

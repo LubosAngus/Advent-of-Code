@@ -2,32 +2,42 @@ import chalk from "chalk";
 import ora from "ora";
 import { JSDOM } from "jsdom";
 import fetchWithCookie from "@advent-cli/src/fetch-with-cookie";
+import { hasCache, readCache, writeCache } from "./cache";
 
 export default async function (result: string): Promise<boolean> {
   const loadingSpinner = ora(`Submitting answer ${chalk.cyan(result)}`).start();
 
-  const response = await fetchWithCookie(
-    `https://adventofcode.com/${global.year}/day/${global.dayInt}`
-  );
+  const cacheKey = `answers__${global.year}__${global.day}`;
+  let answers;
 
-  const responseText = await response.text();
+  if (await hasCache(cacheKey)) {
+    answers = await readCache(cacheKey);
 
-  if (response.status !== 200) {
-    loadingSpinner.fail(
-      chalk.red.bold(response.status) + "\n" + chalk.red(responseText)
+    console.log(chalk.dim.italic("[cached]"));
+  } else {
+    const response = await fetchWithCookie(
+      `https://adventofcode.com/${global.year}/day/${global.dayInt}`
     );
 
-    return;
+    const responseText = await response.text();
+
+    if (response.status !== 200) {
+      loadingSpinner.fail(chalk.red.bold(response.status));
+
+      throw new Error(responseText);
+    }
+
+    const dom = new JSDOM(responseText);
+    const document = dom.window.document;
+
+    answers = [
+      ...document.querySelectorAll("main article.day-desc + p code"),
+    ].map((answerEl) => {
+      return answerEl.innerHTML;
+    });
+
+    await writeCache(cacheKey, answers);
   }
-
-  const dom = new JSDOM(responseText);
-  const document = dom.window.document;
-
-  const answers = [
-    ...document.querySelectorAll("main article.day-desc + p code"),
-  ].map((answerEl) => {
-    return answerEl.innerHTML;
-  });
 
   const correctAnswer = answers[global.part - 1];
 

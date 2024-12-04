@@ -6,7 +6,7 @@ import submitExistingAnswer from "@advent-cli/src/submit-existing-answer";
 export default async function (result: string): Promise<void> {
   let isResultCorrect = false;
 
-  if (global.hasStar) {
+  if (global.hasStarCurrentPart) {
     isResultCorrect = await submitExistingAnswer(result);
   } else {
     isResultCorrect = await submitNewAnswer(result);
@@ -16,7 +16,7 @@ export default async function (result: string): Promise<void> {
     return;
   }
 
-  if (!global.hasStar) {
+  if (!global.hasStarCurrentPart) {
     await assignStars();
   }
 

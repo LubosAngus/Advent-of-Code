@@ -35,11 +35,9 @@ export default async (): Promise<void> => {
     const responseText = await response.text();
 
     if (response.status !== 200) {
-      loadingSpinner.fail(
-        chalk.red.bold(response.status) + "\n" + chalk.red(responseText)
-      );
+      loadingSpinner.fail(chalk.red.bold(response.status));
 
-      return;
+      throw new Error(responseText);
     }
 
     try {

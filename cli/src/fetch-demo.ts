@@ -1,22 +1,22 @@
 import chalk from "chalk";
+import fetchWithCookie from "./fetch-with-cookie";
 
-export default async (): Promise<string> => {
-  const response = await fetch(
+export default async (): Promise<string[]> => {
+  const response = await fetchWithCookie(
     `https://adventofcode.com/${global.year}/day/${global.dayInt}`
   );
 
   const responseText = await response.text();
 
   if (response.status !== 200) {
-    console.log(
-      chalk.red.bold(response.status) + "\n" + chalk.red(responseText)
-    );
+    console.log(chalk.red.bold(response.status));
 
     throw new Error(responseText);
   }
 
-  const regex = /For example.*?<code>(?<demo>.*?)<\/code>/s;
-  const matches = regex.exec(responseText);
+  const regex = /For example.*?<code>(.*?)<\/code>/gs;
 
-  return (matches?.groups?.demo || "").trim();
+  return [...responseText.matchAll(regex)].map((match) => {
+    return match[1].trim();
+  });
 };

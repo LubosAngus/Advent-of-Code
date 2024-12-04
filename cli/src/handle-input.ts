@@ -5,7 +5,7 @@ import ora from "ora";
 import { readFile, writeFile } from "fs/promises";
 
 export default async (): Promise<void> => {
-  const loadingSpinner = ora(`Checking if input.txt exists`).start();
+  const loadingSpinner = ora(`Getting input`).start();
   const folderPath = getFolderPath();
   const inputFilePath = path.join(folderPath, "input.txt");
   let inputExists = true;

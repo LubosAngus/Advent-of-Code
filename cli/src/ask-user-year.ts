@@ -1,7 +1,7 @@
-import getAdventOfCodeYears from "@advent-cli-src/get-advent-of-code-years";
+import getAdventOfCodeYears from "@advent-cli/src/get-advent-of-code-years";
 import { select } from "@inquirer/prompts";
 import chalk from "chalk";
-import cleanupBeforeExit from "./cleanup-before-exit";
+import cleanupBeforeExit from "@advent-cli/src/cleanup-before-exit";
 
 export default async (): Promise<void> => {
   const years = getAdventOfCodeYears().map((year) => {

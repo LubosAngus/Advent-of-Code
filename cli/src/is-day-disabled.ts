@@ -1,4 +1,4 @@
-import isAfterMidnightEST from "@advent-cli-src/is-after-midnight-EST";
+import isAfterMidnightEST from "@advent-cli/src/is-after-midnight-EST";
 
 export default function (year: string, day: number): boolean {
   const currentYear = new Date().getFullYear().toString();

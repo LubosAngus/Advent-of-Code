@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import ora from "ora";
 import { JSDOM } from "jsdom";
-import fetchWithCookie from "./fetch-with-cookie";
+import fetchWithCookie from "@advent-cli/src/fetch-with-cookie";
 
 export default async function (result: string): Promise<boolean> {
   const loadingSpinner = ora(`Submitting answer ${chalk.cyan(result)}`).start();

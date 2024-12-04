@@ -1,7 +1,6 @@
 import { select } from "@inquirer/prompts";
 import chalk from "chalk";
-import cleanupBeforeExit from "./cleanup-before-exit";
-import bootstrapPartTwo from "./bootstrap-part-two";
+import cleanupBeforeExit from "@advent-cli/src/cleanup-before-exit";
 
 export default async (): Promise<void> => {
   let part = 1;

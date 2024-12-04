@@ -1,5 +1,5 @@
 import * as path from "path";
-import { __ROOT_DIR } from "@advent-cli-src/get-folder-path";
+import { __ROOT_DIR } from "@advent-cli/src/get-folder-path";
 import { promises as fs } from "fs";
 
 export default async (): Promise<void> => {

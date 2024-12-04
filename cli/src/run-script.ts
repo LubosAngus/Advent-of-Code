@@ -1,13 +1,13 @@
-import clearConsole from "@advent-cli-src/clear-console";
-import timer from "@advent-cli-src/timer";
+import clearConsole from "@advent-cli/src/clear-console";
+import timer from "@advent-cli/src/timer";
 import chalk from "chalk";
 import { type ChildProcessWithoutNullStreams, spawn } from "child_process";
 import { pathToFileURL } from "url";
 import kill from "tree-kill";
-import processSystemMessage from "@advent-cli-src/process-system-message";
-import printHeader from "./print-header";
+import processSystemMessage from "@advent-cli/src/process-system-message";
+import printHeader from "@advent-cli/src/print-header";
 import path from "path";
-import getFolderPath, { __ROOT_DIR } from "./get-folder-path";
+import getFolderPath, { __ROOT_DIR } from "@advent-cli/src/get-folder-path";
 
 let childProcess: ChildProcessWithoutNullStreams | null = null;
 const SYSTEM_MESSAGE_KEY = "__SYSTEM_EVENT__";

@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import fetchWithCookie from "./fetch-with-cookie";
+import fetchWithCookie from "@advent-cli/src/fetch-with-cookie";
 
 export default async (): Promise<string> => {
   const response = await fetchWithCookie(

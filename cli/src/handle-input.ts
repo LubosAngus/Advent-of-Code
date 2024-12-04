@@ -1,6 +1,6 @@
-import getFolderPath from "@advent-cli-src/get-folder-path";
+import getFolderPath from "@advent-cli/src/get-folder-path";
 import * as path from "path";
-import fetchInput from "./fetch-input";
+import fetchInput from "@advent-cli/src/fetch-input";
 import ora from "ora";
 import { readFile, writeFile } from "fs/promises";
 
@@ -11,8 +11,8 @@ export default async (): Promise<void> => {
   let inputExists = true;
 
   try {
-    const inputContents = await readFile(inputFilePath, "utf-8")
-    inputExists = !!inputContents
+    const inputContents = await readFile(inputFilePath, "utf-8");
+    inputExists = !!inputContents;
   } catch {
     inputExists = false;
   }
@@ -22,7 +22,7 @@ export default async (): Promise<void> => {
     return;
   }
 
-  loadingSpinner.text = 'fetching input.txt from remote'
+  loadingSpinner.text = "fetching input.txt from remote";
 
   const input = await fetchInput();
 

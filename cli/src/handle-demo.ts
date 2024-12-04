@@ -1,6 +1,6 @@
-import getFolderPath from "@advent-cli-src/get-folder-path";
+import getFolderPath from "@advent-cli/src/get-folder-path";
 import * as path from "path";
-import fetchDemo from "./fetch-demo";
+import fetchDemo from "@advent-cli/src/fetch-demo";
 import ora from "ora";
 import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
@@ -12,8 +12,8 @@ export default async (): Promise<void> => {
   let demoExists = true;
 
   try {
-    const demoContents = await readFile(demoFilePath, "utf-8")
-    demoExists = !!demoContents
+    const demoContents = await readFile(demoFilePath, "utf-8");
+    demoExists = !!demoContents;
   } catch {
     demoExists = false;
   }
@@ -23,13 +23,13 @@ export default async (): Promise<void> => {
     return;
   }
 
-  loadingSpinner.text = 'fetching demo.txt from remote'
+  loadingSpinner.text = "fetching demo.txt from remote";
 
   const demo = await fetchDemo();
 
   await writeFile(demoFilePath, demo);
 
-  if (demo === '') {
+  if (demo === "") {
     loadingSpinner.warn(chalk.yellow("demo.txt not found"));
   } else {
     loadingSpinner.succeed("demo.txt successfully fetched");

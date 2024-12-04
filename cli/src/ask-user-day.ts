@@ -1,7 +1,7 @@
 import { select } from "@inquirer/prompts";
-import isDayDisabled from "@advent-cli-src/is-day-disabled";
+import isDayDisabled from "@advent-cli/src/is-day-disabled";
 import chalk from "chalk";
-import cleanupBeforeExit from "./cleanup-before-exit";
+import cleanupBeforeExit from "@advent-cli/src/cleanup-before-exit";
 
 export default async (): Promise<void> => {
   const days = [] as {

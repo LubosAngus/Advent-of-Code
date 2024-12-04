@@ -1,8 +1,7 @@
-import timer from "@advent-cli-src/timer";
+import timer from "@advent-cli/src/timer";
 import chalk from "chalk";
 import { confirm } from "@inquirer/prompts";
-import submitResult from "./submit-result";
-import cleanupBeforeExit from "./cleanup-before-exit";
+import submitResult from "@advent-cli/src/submit-result";
 
 global.resultAbortController = undefined as AbortController;
 

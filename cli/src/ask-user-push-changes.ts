@@ -1,7 +1,7 @@
 import { confirm } from "@inquirer/prompts";
 import chalk from "chalk";
 import { exec } from "child_process";
-import cleanupBeforeExit from "./cleanup-before-exit";
+import cleanupBeforeExit from "@advent-cli/src/cleanup-before-exit";
 import ora from "ora";
 
 export default async (): Promise<void> => {

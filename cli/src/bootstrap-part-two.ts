@@ -1,4 +1,4 @@
-import getFolderPath from "@advent-cli-src/get-folder-path";
+import getFolderPath from "@advent-cli/src/get-folder-path";
 import chalk from "chalk";
 import { promises as fs, readFileSync } from "fs";
 import ora from "ora";
@@ -9,7 +9,7 @@ export default async (): Promise<void> => {
 
   if (global.part === 1) {
     loadingSpinner.info(chalk.dim.italic("part2.ts [skipped]"));
-    return
+    return;
   }
 
   const folderPath = getFolderPath();

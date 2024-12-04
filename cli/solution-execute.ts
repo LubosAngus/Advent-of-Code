@@ -1,4 +1,4 @@
-import { type SystemMessagesKeys } from "@advent-cli-src/process-system-message";
+import { type SystemMessagesKeys } from "@advent-cli/src/process-system-message";
 
 function printSystemEvent(name: SystemMessagesKeys, data: string = "") {
   const systemEventName = process.argv[3];

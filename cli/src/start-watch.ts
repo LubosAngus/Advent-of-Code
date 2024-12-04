@@ -1,8 +1,8 @@
-import getFolderPath from "@advent-cli-src/get-folder-path";
-import printHeader from "@advent-cli-src/print-header";
+import getFolderPath from "@advent-cli/src/get-folder-path";
+import printHeader from "@advent-cli/src/print-header";
 import chokidar from "chokidar";
 import * as path from "path";
-import runScript from "@advent-cli-src/run-script";
+import runScript from "@advent-cli/src/run-script";
 
 export default async (): Promise<void> => {
   const folderPath = getFolderPath();

@@ -2,10 +2,10 @@ import ora from "ora";
 import chalk from "chalk";
 import { JSDOM } from "jsdom";
 import * as path from "path";
-import { __ROOT_DIR } from "@advent-cli-src/get-folder-path";
+import { __ROOT_DIR } from "@advent-cli/src/get-folder-path";
 import { promises as fs } from "fs";
-import getAdventOfCodeYears from "@advent-cli-src/get-advent-of-code-years";
-import fetchWithCookie from "./fetch-with-cookie";
+import getAdventOfCodeYears from "@advent-cli/src/get-advent-of-code-years";
+import fetchWithCookie from "@advent-cli/src/fetch-with-cookie";
 
 // TODO: remove any
 export default async (): Promise<void> => {

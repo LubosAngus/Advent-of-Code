@@ -1,4 +1,4 @@
-import getFolderPath, { __ROOT_DIR } from "@advent-cli-src/get-folder-path";
+import getFolderPath, { __ROOT_DIR } from "@advent-cli/src/get-folder-path";
 import { promises as fs, readFileSync } from "fs";
 import ora from "ora";
 import * as path from "path";

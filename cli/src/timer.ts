@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import formatTime from "./format-time";
+import formatTime from "@advent-cli/src/format-time";
 
 const startTimes = new Map();
 const finishedTimes = new Map();

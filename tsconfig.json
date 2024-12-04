@@ -7,7 +7,7 @@
     "baseUrl": ".",
     "moduleResolution": "node",
     "paths": {
-      "@advent-cli-src/*": ["cli/src/*"],
+      "@advent-cli/*": ["cli/*"],
       "@advent-solutions/*": ["solutions/*"],
       "@advent-utils/*": ["utils/*"]
     }

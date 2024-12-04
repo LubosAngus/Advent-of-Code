@@ -1,5 +1,4 @@
-import getFolderPath from "@advent-cli-src/get-folder-path";
-import chalk from "chalk";
+import getFolderPath from "@advent-cli/src/get-folder-path";
 import { promises as fs } from "fs";
 import ora from "ora";
 

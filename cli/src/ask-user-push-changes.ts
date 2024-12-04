@@ -5,8 +5,6 @@ import cleanupBeforeExit from "./cleanup-before-exit";
 import ora from "ora";
 
 export default async (): Promise<void> => {
-  console.log();
-
   const shouldPush = await confirm({
     message: "Push changes?",
     default: true,
@@ -22,14 +20,14 @@ export default async (): Promise<void> => {
     return;
   }
 
-  console.log();
-
   const loadingSpinner = ora("Pushing changes").start();
 
   exec(`git push`, async (error, stdout, stderr) => {
     loadingSpinner.stop();
 
-    console.log(stdout);
+    if (stdout) {
+      console.log(stdout);
+    }
 
     if (error) {
       console.error(chalk.bgRed.bold.white(" ERROR "));

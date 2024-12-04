@@ -4,6 +4,7 @@ import { exec } from "child_process";
 import cleanupBeforeExit from "./cleanup-before-exit";
 import ora from "ora";
 import askUserPushChanges from "./ask-user-push-changes";
+import sleep from "@advent-utils/sleep";
 
 export default async (): Promise<void> => {
   console.log();
@@ -23,20 +24,20 @@ export default async (): Promise<void> => {
     return;
   }
 
-  console.log();
-
   const commitMessage = `${global.year}/${global.day} - Part ${global.part}`;
   const loadingSpinner = ora(
     `Commiting with message "${commitMessage}"`
   ).start();
 
-  console.log('before exec')
   exec(
-    `git add solutions/${global.year}/${global.day} && git commit -m "${commitMessage}"`,
+    // `git add solutions/${global.year}/${global.day} && git commit -m "${commitMessage}"`,
+    `git add solutions/${global.year}/${global.day}`,
     async (error, stdout, stderr) => {
       loadingSpinner.stop();
 
-      console.log(stdout);
+      if (stdout) {
+        console.log(stdout);
+      }
 
       if (error) {
         console.error(chalk.bgRed.bold.white(" ERROR "));
@@ -48,11 +49,7 @@ export default async (): Promise<void> => {
         console.error(stderr.toString());
       }
 
-      console.log('inside exec')
+      await askUserPushChanges();
     }
   );
-
-  console.log('after exec')
-
-  await askUserPushChanges();
 };

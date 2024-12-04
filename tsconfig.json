@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "target": "es2022",
+    "module": "es2022",
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "paths": {
+      "@advent-cli-src/*": ["cli/src/*"],
+      "@advent-solutions/*": ["solutions/*"]
+    }
+  }
+}

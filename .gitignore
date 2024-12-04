@@ -1,0 +1,12 @@
+.DS_Store
+
+node_modules/
+
+.vscode/
+.idea/
+
+.env*
+!.env.example
+
+input.txt
+stars.json

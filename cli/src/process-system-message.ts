@@ -64,12 +64,8 @@ const systemMessagesMap = {
         await submitResult(result);
         global.IS_SUBMITTING_ANSWER = false;
       })
-      .catch(async (error) => {
-        console.log();
-        console.log(chalk.blue.italic(error.message));
-
-        await cleanupBeforeExit();
-        process.exit(0);
+      .catch(async () => {
+        // don't remove and leave empty, otherwise program will halt
       });
 
     console.log();

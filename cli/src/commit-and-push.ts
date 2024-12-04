@@ -21,7 +21,7 @@ export default async (): Promise<void> => {
     return;
   }
 
-  const commitMessage = `${global.year}/${global.day}/${global.file}`;
+  const commitMessage = `${global.year}/${global.day} - Part ${global.part}`;
 
   exec(
     `git add solutions/${global.year}/${global.day} && git commit -m "${commitMessage}" && git push`,

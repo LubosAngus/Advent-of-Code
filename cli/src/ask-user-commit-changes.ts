@@ -8,19 +8,20 @@ import askUserPushChanges from "@advent-cli/src/ask-user-push-changes";
 export default async (): Promise<void> => {
   console.log();
 
-  const shouldCommit = await confirm({
+  let shouldCommit = await confirm({
     message: "Commit changes?",
     default: true,
   }).catch(async (error) => {
     console.log();
     console.log(chalk.blue.italic(error.message));
 
-    await cleanupBeforeExit();
-    process.exit(0);
+    shouldCommit = false;
   });
 
   if (!shouldCommit) {
-    return;
+    await cleanupBeforeExit();
+
+    process.exit(0);
   }
 
   const commitMessage = `${global.year}/${global.day} - Part ${global.part}`;
@@ -29,8 +30,7 @@ export default async (): Promise<void> => {
   ).start();
 
   exec(
-    // `git add solutions/${global.year}/${global.day} && git commit -m "${commitMessage}"`,
-    `git add solutions/${global.year}/${global.day}`,
+    `git add solutions/${global.year}/${global.day} && git commit -m "${commitMessage}"`,
     async (error, stdout, stderr) => {
       loadingSpinner.stop();
 

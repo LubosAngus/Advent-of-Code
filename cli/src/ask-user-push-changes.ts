@@ -5,19 +5,20 @@ import cleanupBeforeExit from "@advent-cli/src/cleanup-before-exit";
 import ora from "ora";
 
 export default async (): Promise<void> => {
-  const shouldPush = await confirm({
+  let shouldPush = await confirm({
     message: "Push changes?",
     default: true,
   }).catch(async (error) => {
     console.log();
     console.log(chalk.blue.italic(error.message));
 
-    await cleanupBeforeExit();
-    process.exit(0);
+    shouldPush = false;
   });
 
   if (!shouldPush) {
-    return;
+    await cleanupBeforeExit();
+
+    process.exit(0);
   }
 
   const loadingSpinner = ora("Pushing changes").start();

@@ -1,10 +1,18 @@
 import { readFileSync } from "fs";
 
-const data = readFileSync("./demo.txt", "utf-8");
-// const data = readFileSync('./input.txt', 'utf-8')
+const rawData = readFileSync('./demo.txt', 'utf-8')
+// const rawData = readFileSync('./input.txt', 'utf-8')
 
-export default async (): Promise<string> => {
-  console.log(data);
+function parseInput(data: string) {
+  return data
+    .split('\n')
+    .map((row) => row.split(' ').map(Number))
+}
+
+export default async (): Promise<string | number> => {
+  const input = parseInput(rawData)
+
+  console.log(input);
 
   return "";
 };

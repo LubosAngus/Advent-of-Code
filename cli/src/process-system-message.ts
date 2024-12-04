@@ -29,7 +29,7 @@ const systemMessagesMap = {
     if (result) {
       console.log(chalk.cyan("Result is: ") + chalk.bgMagenta(result));
     } else {
-      console.log(chalk.cyan("No result"));
+      console.log(chalk.yellow.italic("No result returned"));
     }
     console.log(chalk.cyan.dim.italic(`Execution took ${timer.read("exec")}`));
 

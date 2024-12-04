@@ -1,9 +1,6 @@
 import chalk from "chalk";
 import ora from "ora";
 import { JSDOM } from "jsdom";
-import getFolderPath from "./get-folder-path";
-import path from "path";
-import { writeFile } from "fs/promises";
 
 export default async function (result: string): Promise<boolean> {
   const loadingSpinner = ora(`Submitting answer ${chalk.cyan(result)}`).start();
@@ -23,10 +20,6 @@ export default async function (result: string): Promise<boolean> {
   );
 
   const responseText = await response.text();
-
-  const folderPath = getFolderPath();
-  const demoFilePath = path.join(folderPath, "response.html");
-  await writeFile(demoFilePath, responseText);
 
   if (response.status !== 200) {
     loadingSpinner.fail(

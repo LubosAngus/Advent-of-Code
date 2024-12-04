@@ -1,16 +1,25 @@
 import getFolderPath from "@advent-cli/src/get-folder-path";
 import printHeader from "@advent-cli/src/print-header";
 import chokidar from "chokidar";
-import * as path from "path";
 import runScript from "@advent-cli/src/run-script";
 
 export default async (): Promise<void> => {
   const folderPath = getFolderPath();
-  const filePath = path.join(folderPath, global.file);
 
   // Watch for file changes
-  const watcher = chokidar.watch(filePath, {
+  const watcher = chokidar.watch(folderPath, {
     persistent: true,
+    ignored: (file) => {
+      if (file.endsWith("part2.ts") && global.part === 1) {
+        return true;
+      }
+
+      if (file.endsWith("part1.ts") && global.part === 2) {
+        return true;
+      }
+
+      return false;
+    },
   });
 
   watcher.on("change", () => {

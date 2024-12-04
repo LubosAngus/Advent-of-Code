@@ -2,12 +2,14 @@ import { confirm } from "@inquirer/prompts";
 import chalk from "chalk";
 import { exec } from "child_process";
 import cleanupBeforeExit from "./cleanup-before-exit";
+import ora from "ora";
+import askUserPushChanges from "./ask-user-push-changes";
 
 export default async (): Promise<void> => {
   console.log();
 
-  const commitAndPush = await confirm({
-    message: "Do you want to commit and push?",
+  const shouldCommit = await confirm({
+    message: "Commit changes?",
     default: true,
   }).catch(async (error) => {
     console.log();
@@ -17,15 +19,22 @@ export default async (): Promise<void> => {
     process.exit(0);
   });
 
-  if (!commitAndPush) {
+  if (!shouldCommit) {
     return;
   }
 
+  console.log();
+
   const commitMessage = `${global.year}/${global.day} - Part ${global.part}`;
+  const loadingSpinner = ora(
+    `Commiting with message "${commitMessage}"`
+  ).start();
 
   exec(
-    `git add solutions/${global.year}/${global.day} && git commit -m "${commitMessage}" && git push`,
+    `git add solutions/${global.year}/${global.day} && git commit -m "${commitMessage}"`,
     (error, stdout, stderr) => {
+      loadingSpinner.clear();
+
       console.log(stdout);
 
       if (error) {
@@ -41,4 +50,6 @@ export default async (): Promise<void> => {
       process.exit();
     }
   );
+
+  await askUserPushChanges();
 };

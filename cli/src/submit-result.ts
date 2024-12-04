@@ -1,5 +1,5 @@
 import assignStars from "@advent-cli-src/assign-stars";
-import commitAndPush from "./commit-and-push";
+import askUserCommitChanges from "./ask-user-commit-changes";
 import submitNewAnswer from "./submit-new-answer";
 
 export default async function (result: string): Promise<void> {
@@ -10,5 +10,5 @@ export default async function (result: string): Promise<void> {
   }
 
   await assignStars();
-  await commitAndPush();
+  await askUserCommitChanges();
 }

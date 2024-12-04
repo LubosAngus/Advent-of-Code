@@ -26,24 +26,22 @@ export default async (): Promise<void> => {
 
   const loadingSpinner = ora("Pushing changes").start();
 
-  exec(
-    `git push`,
-    (error, stdout, stderr) => {
-      loadingSpinner.clear();
+  exec(`git push`, async (error, stdout, stderr) => {
+    loadingSpinner.stop();
 
-      console.log(stdout);
+    console.log(stdout);
 
-      if (error) {
-        console.error(chalk.bgRed.bold.white(" ERROR "));
-        console.error(error.message || error);
-      }
-
-      if (stderr) {
-        console.error(chalk.bgRed.bold.white(" STDERR "));
-        console.error(stderr.toString());
-      }
-
-      process.exit();
+    if (error) {
+      console.error(chalk.bgRed.bold.white(" ERROR "));
+      console.error(error.message || error);
     }
-  );
+
+    if (stderr) {
+      console.error(chalk.bgRed.bold.white(" STDERR "));
+      console.error(stderr.toString());
+    }
+
+    await cleanupBeforeExit();
+    process.exit(0);
+  });
 };

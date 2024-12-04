@@ -1,12 +1,12 @@
 import chalk from "chalk";
 import ora from "ora";
 import { JSDOM } from "jsdom";
+import fetchWithCookie from "./fetch-with-cookie";
 
 export default async function (result: string): Promise<boolean> {
   const loadingSpinner = ora(`Submitting answer ${chalk.cyan(result)}`).start();
 
-  // TODO: NTH when have star already, check on the page for answer
-  const response = await fetch(
+  const response = await fetchWithCookie(
     `https://adventofcode.com/${global.year}/day/${global.dayInt}/answer`,
     {
       method: "POST",
@@ -14,7 +14,6 @@ export default async function (result: string): Promise<boolean> {
       headers: {
         accept: "text/html",
         "content-type": "application/x-www-form-urlencoded",
-        cookie: `session=${process.env.USER_SESSION_COOKIE}`,
       },
     }
   );
@@ -23,7 +22,7 @@ export default async function (result: string): Promise<boolean> {
 
   if (response.status !== 200) {
     loadingSpinner.fail(
-      chalk.red(chalk.bold(response.status)) + "\n" + chalk.red(responseText)
+      chalk.red.bold(response.status) + "\n" + chalk.red(responseText)
     );
 
     return;

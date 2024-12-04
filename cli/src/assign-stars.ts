@@ -5,7 +5,7 @@ import { promises as fs } from "fs";
 export default async (): Promise<void> => {
   const starsFilePath = path.join(__ROOT_DIR, "stars.json");
   const year = global.year;
-  const day = global.day;
+  const day = global.dayInt;
   const newValue = global.part;
 
   let stars = {
@@ -28,7 +28,7 @@ export default async (): Promise<void> => {
 
   let oldValue = 0;
   if (stars[year][day]) {
-    oldValue = stars[year][day];
+    oldValue = stars[year][day].length;
   }
 
   newTotal += newValue - oldValue;

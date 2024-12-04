@@ -30,10 +30,11 @@ export default async (): Promise<void> => {
     `Commiting with message "${commitMessage}"`
   ).start();
 
+  console.log('before exec')
   exec(
     `git add solutions/${global.year}/${global.day} && git commit -m "${commitMessage}"`,
-    (error, stdout, stderr) => {
-      loadingSpinner.clear();
+    async (error, stdout, stderr) => {
+      loadingSpinner.stop();
 
       console.log(stdout);
 
@@ -47,9 +48,11 @@ export default async (): Promise<void> => {
         console.error(stderr.toString());
       }
 
-      process.exit();
+      console.log('inside exec')
     }
   );
+
+  console.log('after exec')
 
   await askUserPushChanges();
 };

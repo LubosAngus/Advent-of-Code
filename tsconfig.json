@@ -8,7 +8,8 @@
     "moduleResolution": "node",
     "paths": {
       "@advent-cli-src/*": ["cli/src/*"],
-      "@advent-solutions/*": ["solutions/*"]
+      "@advent-solutions/*": ["solutions/*"],
+      "@advent-utils/*": ["utils/*"]
     }
   }
 }

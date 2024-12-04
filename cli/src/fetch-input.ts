@@ -1,31 +1,20 @@
-import ora from "ora";
 import chalk from "chalk";
+import fetchWithCookie from "./fetch-with-cookie";
 
-export default async (): Promise<string | false> => {
-  const loadingSpinner = ora(
-    `Fetching input.txt for day ${global.day}`
-  ).start();
-
-  const response = await fetch(
-    `https://adventofcode.com/${global.year}/day/${global.dayInt}/input`,
-    {
-      headers: {
-        cookie: `session=${process.env.USER_SESSION_COOKIE}`,
-      },
-    }
+export default async (): Promise<string> => {
+  const response = await fetchWithCookie(
+    `https://adventofcode.com/${global.year}/day/${global.dayInt}/input`
   );
 
   const responseText = await response.text();
 
   if (response.status !== 200) {
-    loadingSpinner.fail(
-      chalk.red(chalk.bold(response.status)) + "\n" + chalk.red(responseText)
+    console.log(
+      chalk.red.bold(response.status) + "\n" + chalk.red(responseText)
     );
 
-    return false;
+    throw new Error(responseText);
   }
 
-  loadingSpinner.succeed(chalk.green("input.txt successfully fetched"));
-
-  return responseText;
+  return responseText.trim();
 };

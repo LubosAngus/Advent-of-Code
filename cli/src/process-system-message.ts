@@ -11,7 +11,7 @@ const systemMessagesMap = {
     timer.stop("init");
 
     console.log(chalk.cyan.dim.italic(`Initialized in ${timer.read("init")}`));
-    console.log(chalk.cyan.dim("".padStart(27, "╴")));
+    console.log(chalk.cyan.dim("".padStart(44, "╴")));
 
     timer.start("exec");
   },

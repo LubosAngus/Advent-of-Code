@@ -9,52 +9,13 @@ import * as path from "path";
 import { pathToFileURL } from "url";
 import kill from "tree-kill";
 import processSystemMessage from "@advent-cli-src/process-system-message";
-import { select } from "@inquirer/prompts";
-import bootstrapPartTwo from "./bootstrap-part-two";
-import cleanupBeforeExit from "./cleanup-before-exit";
 
 let runningProcess: ChildProcessWithoutNullStreams | null = null;
 const SYSTEM_MESSAGE_KEY = "__SYSTEM_EVENT__";
 
 export default async (): Promise<void> => {
   const folderPath = getFolderPath();
-  let part = 1;
-
-  const stars = global.stars[global.year][global.dayInt];
-  if (stars) {
-    part = await select({
-      message: "Which part?",
-      choices: [
-        {
-          value: 2,
-          name: `Part 2 ${stars === "**" ? chalk.yellow("*") : ""}`,
-        },
-        {
-          value: 1,
-          name: `Part 1 ${chalk.yellow("*")}`,
-        },
-      ],
-      loop: false,
-      default: 2,
-    }).catch(async (error) => {
-      console.log();
-      console.log(chalk.blue.italic(error.message));
-
-      await cleanupBeforeExit();
-      process.exit(0);
-    });
-  }
-
-  if (part === 2) {
-    await bootstrapPartTwo();
-  }
-
-  const file = `part${part}.ts`;
-
-  global.part = part;
-  global.file = file;
-
-  const filePath = path.join(folderPath, file);
+  const filePath = path.join(folderPath, global.file);
 
   async function runScript() {
     if (global.IS_SUBMITTING_ANSWER === true) {
@@ -125,5 +86,5 @@ export default async (): Promise<void> => {
 
   global.WATCHER = watcher;
 
-  runScript();
+  printHeader(true)
 };

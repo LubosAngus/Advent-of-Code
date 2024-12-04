@@ -5,6 +5,7 @@ import * as path from "path";
 import { __ROOT_DIR } from "@advent-cli-src/get-folder-path";
 import { promises as fs } from "fs";
 import getAdventOfCodeYears from "@advent-cli-src/get-advent-of-code-years";
+import fetchWithCookie from "./fetch-with-cookie";
 
 // TODO: remove any
 export default async (): Promise<void> => {
@@ -29,17 +30,13 @@ export default async (): Promise<void> => {
   for (const year of years) {
     loadingSpinner.text = `Fetching stars for year ${year}`;
 
-    const response = await fetch(`https://adventofcode.com/${year}`, {
-      headers: {
-        cookie: `session=${process.env.USER_SESSION_COOKIE}`,
-      },
-    });
+    const response = await fetchWithCookie(`https://adventofcode.com/${year}`);
 
     const responseText = await response.text();
 
     if (response.status !== 200) {
       loadingSpinner.fail(
-        chalk.red(chalk.bold(response.status)) + "\n" + chalk.red(responseText)
+        chalk.red.bold(response.status) + "\n" + chalk.red(responseText)
       );
 
       return;

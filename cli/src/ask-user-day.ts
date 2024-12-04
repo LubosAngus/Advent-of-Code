@@ -3,7 +3,6 @@ import isDayDisabled from "@advent-cli-src/is-day-disabled";
 import chalk from "chalk";
 import cleanupBeforeExit from "./cleanup-before-exit";
 
-// TODO: stars type
 export default async (): Promise<void> => {
   const days = [] as {
     value: number;

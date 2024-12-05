@@ -26,6 +26,9 @@ export default async (): Promise<void> => {
     choices: years,
     loop: false,
     pageSize: 25,
+    theme: {
+      helpMode: 'never',
+    },
   }).catch(async (error) => {
     console.log()
     console.log(chalk.blue.italic(error.message))

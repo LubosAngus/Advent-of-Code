@@ -40,6 +40,9 @@ export default async (): Promise<void> => {
     loop: false,
     pageSize: 25,
     default: defaultValue,
+    theme: {
+      helpMode: 'never',
+    },
   }).catch(async (error) => {
     console.log()
     console.log(chalk.blue.italic(error.message))

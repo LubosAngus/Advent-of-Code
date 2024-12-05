@@ -21,6 +21,9 @@ export default async (): Promise<void> => {
       ],
       loop: false,
       default: 2,
+      theme: {
+        helpMode: 'never',
+      },
     }).catch(async (error) => {
       console.log()
       console.log(chalk.blue.italic(error.message))

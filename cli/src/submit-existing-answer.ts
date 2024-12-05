@@ -33,7 +33,7 @@ export default async function (result: string): Promise<boolean> {
     answers = [
       ...document.querySelectorAll('main article.day-desc + p code'),
     ].map((answerEl) => {
-      return answerEl.innerHTML
+      return answerEl.textContent
     })
 
     await writeCache(cacheKey, answers)

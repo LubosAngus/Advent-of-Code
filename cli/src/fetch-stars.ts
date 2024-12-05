@@ -48,7 +48,7 @@ export default async (): Promise<void> => {
 
       for (const dayEl of document.querySelectorAll('pre.calendar > a')) {
         const calendarDay = parseInt(
-          dayEl.querySelector('.calendar-day').innerHTML,
+          dayEl.querySelector('.calendar-day').textContent,
         )
 
         if (dayEl.classList.contains('calendar-complete')) {

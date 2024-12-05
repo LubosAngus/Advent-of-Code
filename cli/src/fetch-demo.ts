@@ -26,7 +26,7 @@ export default async (loadingSpinner: Ora): Promise<string[]> => {
   const document = dom.window.document
   const possibleDemos = [...document.querySelectorAll('pre code')]
     .map((item) => {
-      return item.innerHTML.trim()
+      return item.textContent.trim()
     })
     .filter((item, index, self) => {
       return self.indexOf(item) === index

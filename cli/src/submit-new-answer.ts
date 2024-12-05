@@ -29,8 +29,7 @@ export default async function (result: string): Promise<boolean> {
   const dom = new JSDOM(responseText)
   const document = dom.window.document
 
-  let mainHtml = document.querySelector('main article p').innerHTML
-  mainHtml = mainHtml.replace(/<\/?[^>]+(>|$)/g, '')
+  let mainHtml = document.querySelector('main article p').textContent
   mainHtml = mainHtml.replace(/\[Return to Day.*?\]/g, '')
   mainHtml = mainHtml.replace(/\[Continue to.*?\]/g, '')
 

@@ -24,22 +24,20 @@ export default async (loadingSpinner: Ora): Promise<string[]> => {
 
   const dom = new JSDOM(responseText)
   const document = dom.window.document
-  const possibleDemos = [...document.querySelectorAll('pre code')]
-    .map((item) => {
+  const possibleDemos = new Set(
+    [...document.querySelectorAll('pre code')].map((item) => {
       return item.textContent.trim()
-    })
-    .filter((item, index, self) => {
-      return self.indexOf(item) === index
-    })
+    }),
+  )
 
-  if (possibleDemos.length > 1) {
+  if (possibleDemos.size > 1) {
     const existingDemos = new Map<string, string>()
 
     try {
       const folderPath = getFolderPath()
       const files = await readdir(folderPath)
       const demoFilesNames = files.filter((file) => {
-        return file.startsWith('demo') && file.endsWith('.txt')
+        return file.match(/demo(?:\d+)?\.txt/)
       })
 
       const filesPromises = demoFilesNames.map((file) =>
@@ -49,7 +47,13 @@ export default async (loadingSpinner: Ora): Promise<string[]> => {
       const demoFiles = await Promise.all(filesPromises)
 
       for (let i = 0; i < demoFiles.length; i++) {
-        existingDemos.set(demoFiles[i].trim(), demoFilesNames[i])
+        const demoFile = demoFiles[i].trim()
+
+        if (!possibleDemos.has(demoFile)) {
+          continue
+        }
+
+        existingDemos.set(demoFile, demoFilesNames[i])
       }
     } catch {
       // nevermind
@@ -59,7 +63,7 @@ export default async (loadingSpinner: Ora): Promise<string[]> => {
 
     const selectedDemos = await checkbox({
       message: 'Which demos?',
-      choices: possibleDemos.map((item) => ({
+      choices: [...possibleDemos.values()].map((item) => ({
         value: item,
         name: truncateString(item.split('\n')[0], 14).padEnd(15, ' '),
         description: '\n' + item,
@@ -82,5 +86,5 @@ export default async (loadingSpinner: Ora): Promise<string[]> => {
     return [...existingDemos.keys(), ...selectedDemos]
   }
 
-  return possibleDemos
+  return [...possibleDemos.values()]
 }

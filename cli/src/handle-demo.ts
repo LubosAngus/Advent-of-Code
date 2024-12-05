@@ -1,7 +1,8 @@
 import fetchDemo from '@advent-cli/src/fetch-demo'
 import getFolderPath from '@advent-cli/src/get-folder-path'
+import { confirm } from '@inquirer/prompts'
 import chalk from 'chalk'
-import { writeFile } from 'fs/promises'
+import { readFile, writeFile } from 'fs/promises'
 import ora from 'ora'
 import * as path from 'path'
 import { hasCache, readCache, writeCache } from './cache'
@@ -28,11 +29,31 @@ export default async (): Promise<void> => {
   }
 
   for (let index = 0; index < demos.length; index++) {
-    const demoItem = demos[index]
     const fileName = `demo${index > 0 ? index : ''}`
     const newDemoFilePath = path.join(folderPath, `${fileName}.txt`)
+    const newDemoContents = demos[index]
 
-    await writeFile(newDemoFilePath, demoItem)
+    try {
+      const oldDemoContents = await readFile(newDemoFilePath, 'utf-8')
+
+      if (newDemoContents !== oldDemoContents) {
+        loadingSpinner.stop()
+
+        let shouldOverwrite = await confirm({
+          message: chalk.blue(`${fileName}.txt already exists, rewrite it?`),
+        }).catch(() => {
+          shouldOverwrite = false
+        })
+
+        if (!shouldOverwrite) {
+          continue
+        }
+      }
+    } catch {
+      // nevermind
+    }
+
+    await writeFile(newDemoFilePath, newDemoContents)
   }
 
   if (demos.length === 0) {

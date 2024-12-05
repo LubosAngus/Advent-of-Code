@@ -1,55 +1,55 @@
-import path from "path";
-import { __ROOT_DIR } from "./get-folder-path";
-import { readFile, writeFile } from "fs/promises";
+import { readFile, writeFile } from 'fs/promises'
+import path from 'path'
+import { __ROOT_DIR } from './get-folder-path'
 
-const CACHE_FILE = path.resolve(__ROOT_DIR, "cache.json");
-let cacheFileContents;
+const CACHE_FILE = path.resolve(__ROOT_DIR, 'cache.json')
+let cacheFileContents
 
 async function getCacheFileContents() {
   if (cacheFileContents !== undefined) {
-    return;
+    return
   }
 
   try {
-    const data = await readFile(CACHE_FILE, "utf-8");
+    const data = await readFile(CACHE_FILE, 'utf-8')
 
-    cacheFileContents = JSON.parse(data);
+    cacheFileContents = JSON.parse(data)
   } catch (error) {
     // Return empty cache if file doesn't exist or is unreadable
-    if (error.code === "ENOENT") {
-      cacheFileContents = {};
+    if (error.code === 'ENOENT') {
+      cacheFileContents = {}
     }
 
-    throw error;
+    throw error
   }
 }
 
 export async function hasCache(key: string): Promise<boolean> {
-  await getCacheFileContents();
+  await getCacheFileContents()
 
-  return typeof cacheFileContents[key] !== "undefined";
+  return typeof cacheFileContents[key] !== 'undefined'
 }
 
-export async function readCache(key: string): Promise<any | false> {
-  await getCacheFileContents();
+export async function readCache(key: string): Promise<unknown | false> {
+  await getCacheFileContents()
 
-  const cachedValue = cacheFileContents[key];
+  const cachedValue = cacheFileContents[key]
 
   if (cachedValue === undefined) {
-    return false;
+    return false
   }
 
-  return cachedValue;
+  return cachedValue
 }
 
 export async function writeCache(key: string, value: string): Promise<void> {
-  await getCacheFileContents();
+  await getCacheFileContents()
 
-  cacheFileContents[key] = value;
+  cacheFileContents[key] = value
 
   await writeFile(
     CACHE_FILE,
     JSON.stringify(cacheFileContents, null, 2),
-    "utf-8"
-  );
+    'utf-8',
+  )
 }

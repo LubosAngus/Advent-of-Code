@@ -1,14 +1,14 @@
-import { readFileSync } from "fs";
+import { readFileSync } from 'fs'
 
 // const rawData = readFileSync('./demo.txt', 'utf-8')
-const rawData = readFileSync("./input.txt", "utf-8");
+const rawData = readFileSync('./input.txt', 'utf-8')
 
 function parseInput(data: string) {
-  const parsedData = data.trim().split(/\r?\n/).filter(Boolean);
+  const parsedData = data.trim().split(/\r?\n/).filter(Boolean)
 
   const splitData = parsedData.reduce(
     (acc, item) => {
-      const [left, right] = item.split("   ")
+      const [left, right] = item.split('   ')
 
       acc.left.push(parseInt(left))
       acc.right.push(parseInt(right))
@@ -54,7 +54,7 @@ function calculateSimilarity(input) {
 }
 
 export default async (): Promise<string | number> => {
-  const input = parseInput(rawData);
+  const input = parseInput(rawData)
 
-  return calculateSimilarity(input);
-};
+  return calculateSimilarity(input)
+}

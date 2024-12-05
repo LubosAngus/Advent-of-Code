@@ -1,40 +1,40 @@
-import * as path from "path";
-import { __ROOT_DIR } from "@advent-cli/src/get-folder-path";
-import { promises as fs } from "fs";
+import { __ROOT_DIR } from '@advent-cli/src/get-folder-path'
+import { promises as fs } from 'fs'
+import * as path from 'path'
 
 export default async (): Promise<void> => {
-  const starsFilePath = path.join(__ROOT_DIR, "stars.json");
-  const year = global.year;
-  const day = global.dayInt;
-  const newValue = global.part;
+  const starsFilePath = path.join(__ROOT_DIR, 'stars.json')
+  const year = global.year
+  const day = global.dayInt
+  const newValue = global.part
 
   let stars = {
     [year]: {
       total: 0,
     },
-  };
+  }
 
   try {
     const starsRaw = await fs.readFile(starsFilePath, {
-      encoding: "utf-8",
-    });
+      encoding: 'utf-8',
+    })
 
-    stars = JSON.parse(starsRaw);
+    stars = JSON.parse(starsRaw)
   } catch {
     // nevermind
   }
 
-  let newTotal = stars[year].total;
+  let newTotal = stars[year].total
 
-  let oldValue = 0;
+  let oldValue = 0
   if (stars[year][day]) {
-    oldValue = stars[year][day].length;
+    oldValue = stars[year][day].length
   }
 
-  newTotal += newValue - oldValue;
+  newTotal += newValue - oldValue
 
-  stars[year].total = newTotal;
-  stars[year][day] = "".padStart(newValue, "*");
+  stars[year].total = newTotal
+  stars[year][day] = ''.padStart(newValue, '*')
 
-  await fs.writeFile(starsFilePath, JSON.stringify(stars, null, 2));
-};
+  await fs.writeFile(starsFilePath, JSON.stringify(stars, null, 2))
+}

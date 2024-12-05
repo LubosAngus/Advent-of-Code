@@ -4,5 +4,5 @@
  * Use with caution.
  */
 export default (): void => {
-  console.log("\x1Bc");
-};
+  console.log('\x1Bc')
+}

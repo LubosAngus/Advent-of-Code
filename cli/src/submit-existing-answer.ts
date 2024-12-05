@@ -1,62 +1,62 @@
-import chalk from "chalk";
-import ora from "ora";
-import { JSDOM } from "jsdom";
-import fetchWithCookie from "@advent-cli/src/fetch-with-cookie";
-import { hasCache, readCache, writeCache } from "./cache";
+import fetchWithCookie from '@advent-cli/src/fetch-with-cookie'
+import chalk from 'chalk'
+import { JSDOM } from 'jsdom'
+import ora from 'ora'
+import { hasCache, readCache, writeCache } from './cache'
 
 export default async function (result: string): Promise<boolean> {
-  const loadingSpinner = ora(`Submitting answer ${chalk.cyan(result)}`).start();
+  const loadingSpinner = ora(`Submitting answer ${chalk.cyan(result)}`).start()
 
-  const cacheKey = `answers__${global.year}__${global.day}`;
-  let answers;
+  const cacheKey = `answers__${global.year}__${global.day}`
+  let answers
 
   if (await hasCache(cacheKey)) {
-    answers = await readCache(cacheKey);
+    answers = await readCache(cacheKey)
 
-    console.log(chalk.dim.italic("[cached]"));
+    console.log(chalk.dim.italic('[cached]'))
   } else {
     const response = await fetchWithCookie(
-      `https://adventofcode.com/${global.year}/day/${global.dayInt}`
-    );
+      `https://adventofcode.com/${global.year}/day/${global.dayInt}`,
+    )
 
-    const responseText = await response.text();
+    const responseText = await response.text()
 
     if (response.status !== 200) {
-      loadingSpinner.fail(chalk.red.bold(response.status));
+      loadingSpinner.fail(chalk.red.bold(response.status))
 
-      throw new Error(responseText);
+      throw new Error(responseText)
     }
 
-    const dom = new JSDOM(responseText);
-    const document = dom.window.document;
+    const dom = new JSDOM(responseText)
+    const document = dom.window.document
 
     answers = [
-      ...document.querySelectorAll("main article.day-desc + p code"),
+      ...document.querySelectorAll('main article.day-desc + p code'),
     ].map((answerEl) => {
-      return answerEl.innerHTML;
-    });
+      return answerEl.innerHTML
+    })
 
-    await writeCache(cacheKey, answers);
+    await writeCache(cacheKey, answers)
   }
 
-  const correctAnswer = answers[global.part - 1];
+  const correctAnswer = answers[global.part - 1]
 
   if (correctAnswer !== result) {
-    loadingSpinner.fail(chalk.bgRed.bold(result));
-    console.log();
+    loadingSpinner.fail(chalk.bgRed.bold(result))
+    console.log()
 
-    console.log(chalk.red("That is not correct answer!"));
+    console.log(chalk.red('That is not correct answer!'))
     console.log(
-      chalk.red("Correct answer is ") + chalk.bgGreen.bold(correctAnswer)
-    );
+      chalk.red('Correct answer is ') + chalk.bgGreen.bold(correctAnswer),
+    )
 
-    return false;
+    return false
   }
 
-  loadingSpinner.succeed(chalk.bgGreen.bold(result));
-  console.log();
+  loadingSpinner.succeed(chalk.bgGreen.bold(result))
+  console.log()
 
-  console.log(chalk.green("That is correct answer!"));
+  console.log(chalk.green('That is correct answer!'))
 
-  return true;
+  return true
 }

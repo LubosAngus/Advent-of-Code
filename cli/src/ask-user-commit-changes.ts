@@ -4,6 +4,7 @@ import { confirm } from '@inquirer/prompts'
 import chalk from 'chalk'
 import { exec } from 'child_process'
 import ora from 'ora'
+import askUserRunEslintPrettier from './ask-user-run-eslint-prettier'
 
 export default async (): Promise<void> => {
   console.log()
@@ -23,6 +24,8 @@ export default async (): Promise<void> => {
 
     process.exit(0)
   }
+
+  await askUserRunEslintPrettier()
 
   const commitMessage = `${global.year}/${global.day} - Part ${global.part}`
   const loadingSpinner = ora(

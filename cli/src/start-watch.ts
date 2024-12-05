@@ -1,5 +1,4 @@
 import getFolderPath from '@advent-cli/src/get-folder-path'
-import printHeader from '@advent-cli/src/print-header'
 import runScript from '@advent-cli/src/run-script'
 import chokidar from 'chokidar'
 
@@ -28,5 +27,5 @@ export default async (): Promise<void> => {
 
   global.WATCHER = watcher
 
-  printHeader(true)
+  runScript(false)
 }

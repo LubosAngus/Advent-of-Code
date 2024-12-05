@@ -12,7 +12,9 @@ import { pathToFileURL } from 'url'
 let childProcess: ChildProcessWithoutNullStreams | null = null
 const SYSTEM_MESSAGE_KEY = '__SYSTEM_EVENT__'
 
-export default async function (): Promise<void> {
+export default async function (
+  shouldClearConsole: boolean = true,
+): Promise<void> {
   if (global.IS_SUBMITTING_ANSWER === true) {
     return
   }
@@ -30,7 +32,10 @@ export default async function (): Promise<void> {
     kill(childProcess.pid)
   }
 
-  clearConsole()
+  if (shouldClearConsole) {
+    clearConsole()
+  }
+
   printHeader()
 
   const args = []

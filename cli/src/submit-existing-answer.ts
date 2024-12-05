@@ -8,12 +8,12 @@ export default async function (result: string): Promise<boolean> {
   const loadingSpinner = ora(`Submitting answer ${chalk.cyan(result)}`).start()
 
   const cacheKey = `answers__${global.year}__${global.day}`
+  let cacheHit = false
   let answers
 
   if (await hasCache(cacheKey)) {
     answers = await readCache(cacheKey)
-
-    console.log(chalk.dim.italic('[cached]'))
+    cacheHit = true
   } else {
     const response = await fetchWithCookie(
       `https://adventofcode.com/${global.year}/day/${global.dayInt}`,
@@ -42,7 +42,11 @@ export default async function (result: string): Promise<boolean> {
   const correctAnswer = answers[global.part - 1]
 
   if (correctAnswer !== result) {
-    loadingSpinner.fail(chalk.bgRed.bold(result))
+    loadingSpinner.fail(
+      chalk.bgRed.bold(result) +
+        ' ' +
+        (cacheHit ? chalk.dim.italic('[from cache]') : ''),
+    )
     console.log()
 
     console.log(chalk.red('That is not correct answer!'))
@@ -56,7 +60,11 @@ export default async function (result: string): Promise<boolean> {
   loadingSpinner.succeed(chalk.bgGreen.bold(result))
   console.log()
 
-  console.log(chalk.green('That is correct answer!'))
+  console.log(
+    chalk.green('That is correct answer!') +
+      ' ' +
+      (cacheHit ? chalk.dim.italic('[from cache]') : ''),
+  )
 
   return true
 }

@@ -18,31 +18,31 @@ export default async (): Promise<void> => {
   }`
 
   let cacheHit = false
-  let demo
+  let demos
 
   if (await hasCache(cacheKey)) {
     cacheHit = true
-    demo = await readCache(cacheKey)
+    demos = await readCache(cacheKey)
   } else {
-    demo = await fetchDemo()
+    demos = await fetchDemo(loadingSpinner)
   }
 
-  for (let index = 0; index < demo.length; index++) {
-    const demoItem = demo[index]
+  for (let index = 0; index < demos.length; index++) {
+    const demoItem = demos[index]
     const fileName = `demo${index > 0 ? index : ''}`
     const newDemoFilePath = path.join(folderPath, `${fileName}.txt`)
 
     await writeFile(newDemoFilePath, demoItem)
   }
 
-  if (demo.length === 0) {
+  if (demos.length === 0) {
     loadingSpinner.warn(chalk.yellow('No demo found'))
   } else {
     if (cacheHit) {
-      loadingSpinner.info(`${demo.length} demos served from cache`)
+      loadingSpinner.info(`${demos.length} demos served from cache`)
     } else {
-      loadingSpinner.succeed(`${demo.length} demos successfully fetched`)
-      await writeCache(cacheKey, demo)
+      loadingSpinner.succeed(`${demos.length} demos successfully added`)
+      await writeCache(cacheKey, demos)
     }
   }
 }

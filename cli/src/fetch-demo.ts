@@ -68,7 +68,7 @@ export default async (loadingSpinner: Ora): Promise<string[]> => {
           ? chalk.italic(existingDemos.get(item))
           : false,
       })),
-      required: true,
+      required: existingDemos.size === 0,
       loop: false,
       pageSize: 999,
       theme: {

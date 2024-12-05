@@ -32,26 +32,30 @@ export default async (): Promise<void> => {
     `Commiting with message "${commitMessage}"`,
   ).start()
 
-  exec(
-    `git add solutions/${global.year}/${global.day} && git commit -m "${commitMessage}"`,
-    async (error, stdout, stderr) => {
-      loadingSpinner.stop()
+  return new Promise<void>((resolve) => {
+    exec(
+      `git add solutions/${global.year}/${global.day} && git commit -m "${commitMessage}"`,
+      async (error, stdout, stderr) => {
+        loadingSpinner.stop()
 
-      if (stdout) {
-        console.log(stdout)
-      }
+        if (stdout) {
+          console.log(stdout)
+        }
 
-      if (error) {
-        console.error(chalk.bgRed.bold.white(' ERROR '))
-        console.error(error.message || error)
-      }
+        if (error) {
+          console.error(chalk.bgRed.bold.white(' ERROR '))
+          console.error(error.message || error)
+        }
 
-      if (stderr) {
-        console.error(chalk.bgRed.bold.white(' STDERR '))
-        console.error(stderr.toString())
-      }
+        if (stderr) {
+          console.error(chalk.bgRed.bold.white(' STDERR '))
+          console.error(stderr.toString())
+        }
 
-      await askUserPushChanges()
-    },
-  )
+        await askUserPushChanges()
+
+        resolve()
+      },
+    )
+  })
 }

@@ -1,12 +1,12 @@
 import { readFileSync } from 'fs'
 
-// const inputName = 'demo1'
-const inputName = 'input'
+const inputName = 'demo'
+// const inputName = 'input'
 
 const rawData = readFileSync(`./${inputName}.txt`, 'utf-8')
 
 function parseInput(data: string) {
-  return data.split('\n').map((row) => row.split(' ').map(Number))
+  return data.split('\n').map((row) => row.split(''))
 }
 
 export default async (): Promise<string | number> => {

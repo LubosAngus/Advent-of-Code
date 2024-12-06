@@ -37,10 +37,10 @@ await createDayFolder()
 await bootstrapPartOne()
 await bootstrapPartTwo()
 
-// If input doesn't exists, fetch it from the internet
+// If input doesn't exist, fetch it from the internet
 await handleInput()
 
-// If demo doesn't exists, fetch it from the internet
+// If demo doesn't exist, fetch it from the internet
 await handleDemo()
 
 console.log(chalk.cyan.dim(''.padStart(44, '╴')))

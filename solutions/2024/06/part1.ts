@@ -13,24 +13,23 @@ const SHOW_ANIMATION: boolean = false as boolean
 const moveDirectionMap: {
   [key in GuardDirection]: Coordinates
 } = {
-  '▲': { row: -1, col: +0 },
-  '▶': { row: +0, col: +1 },
-  '▼': { row: +1, col: +0 },
-  '◀': { row: +0, col: -1 },
+  '^': { row: -1, col: +0 },
+  '>': { row: +0, col: +1 },
+  'v': { row: +1, col: +0 },
+  '<': { row: +0, col: -1 },
 }
 
 const rotationDirectionMap: {
   [key in GuardDirection]: GuardDirection
 } = {
-  '▲': '▶',
-  '▶': '▼',
-  '▼': '◀',
-  '◀': '▲',
+  '^': '>',
+  '>': 'v',
+  'v': '<',
+  '<': '^',
 }
 
 function parseInput(data: string): Input {
   return data
-    .replace('^', '▲')
     .replaceAll('.', ' ')
     .replaceAll('#', '█')
     .split('\n')
@@ -78,12 +77,12 @@ export default async (): Promise<string | number> => {
 
   for (let row = 0; row < input.length; row++) {
     for (let col = 0; col < input.length; col++) {
-      if (input[row][col] !== '▲') continue
+      if (input[row][col] !== '^') continue
 
       guardCoordinates = {
         row,
         col,
-        direction: '▲',
+        direction: '^',
       }
 
       break

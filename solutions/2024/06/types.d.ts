@@ -3,7 +3,7 @@ export type Coordinates = {
   row: number
   col: number
 }
-export type GuardDirection = '▲' | '▶' | '▼' | '◀'
+export type GuardDirection = '^' | '>' | 'v' | '<'
 export type GuardCoordinates = Coordinates & {
   direction: GuardDirection
 }

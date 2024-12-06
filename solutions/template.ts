@@ -5,7 +5,9 @@ const inputName = 'demo'
 
 const rawData = readFileSync(`./${inputName}.txt`, 'utf-8')
 
-function parseInput(data: string) {
+type Input = string[][]
+
+function parseInput(data: string): Input {
   return data.split('\n').map((row) => row.split(''))
 }
 

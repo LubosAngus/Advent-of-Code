@@ -44,9 +44,11 @@ export default async function (
   args.push(pathToFileURL(filePath).href)
   args.push(SYSTEM_MESSAGE_KEY)
 
+  process.env.FORCE_COLOR = 'yeah'
   childProcess = spawn('tsx', args, {
     shell: true,
     cwd: folderPath,
+    env: process.env,
   })
 
   childProcess.stdout.on('data', (data) => {

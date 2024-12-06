@@ -1,9 +1,14 @@
 import getFolderPath from '@advent-cli/src/get-folder-path'
 import runScript from '@advent-cli/src/run-script'
+import { exec } from 'child_process'
 import chokidar from 'chokidar'
+import path from 'path'
 
 export default async (): Promise<void> => {
   const folderPath = getFolderPath()
+  const currentFilePath = path.join(folderPath, global.file)
+
+  exec(`code ${currentFilePath}`)
 
   // Watch for file changes
   const watcher = chokidar.watch(folderPath, {

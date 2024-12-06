@@ -17,6 +17,7 @@
     "chokidar": "^4.0.1",
     "inquirer": "^12.1.0",
     "jsdom": "^25.0.1",
+    "log-update": "^6.1.0",
     "ora": "^8.1.1",
     "tree-kill": "^1.2.2"
   },

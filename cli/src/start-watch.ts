@@ -8,7 +8,16 @@ export default async (): Promise<void> => {
   const folderPath = getFolderPath()
   const currentFilePath = path.join(folderPath, global.file)
 
-  exec(`code ${currentFilePath}`)
+  // Only open file in vscode, if terminal is running in vscode
+  exec(`printenv TERM_PROGRAM`, async (_error, stdout) => {
+    stdout = stdout.replaceAll('\n', '')
+
+    if (stdout !== 'vscode') {
+      return
+    }
+
+    exec(`code ${currentFilePath}`)
+  })
 
   // Watch for file changes
   const watcher = chokidar.watch(folderPath, {

@@ -1,1 +1,6 @@
-TODO: readme
+**Todo features list**
+
+- [ ] readme
+- [ ] split part1 / part2 into separate folders
+- [ ] choose which file to commit
+- [ ] option to edit the commit message

@@ -1,12 +1,21 @@
 /**
- * Tiny bit slow, need to optimize somehow
- * took 3.5 seconds to execute
+ * Not my original solution!
+ * My original solution was a bit slow, took 3.5 seconds to execute.
+ *
+ * I went online to look for speed optimizations techniques in others
+ * solutions and I found, that going backwards is way quicker.
+ *
+ * Now this code executes in ~30ms.
  */
 
+import chalk from 'chalk'
 import { readFileSync } from 'fs'
 
+// const inputName = 'demo_tmp'
 // const inputName = 'demo'
 const inputName = 'input'
+
+const DEBUG_LOG = false as boolean
 
 const rawData = readFileSync(`./${inputName}.txt`, 'utf-8')
 
@@ -26,31 +35,48 @@ function parseInput(data: string): Input {
   })
 }
 
+function debugLog(testValue: number, numbers: number[]): void {
+  if (!DEBUG_LOG) return
+
+  let toLog = chalk.blue(testValue)
+
+  for (let i = testValue.toString().length; i < 15; i++) {
+    toLog += chalk.dim.gray('.')
+  }
+
+  toLog += chalk.yellow(`[${numbers.join(',')}]`)
+
+  console.log(toLog)
+}
+
 function isPossible(testValue: number, numbers: number[]): boolean {
-  if (numbers.length === 1) {
-    return numbers[0] === testValue
+  debugLog(testValue, numbers)
+
+  if (numbers.length === 0 || testValue <= 0) {
+    return numbers.length === 0 && testValue === 0
   }
 
-  if (numbers[0] > testValue) {
-    return false
-  }
-
-  const numbersCopy = [...numbers]
-  const [num1, num2] = numbersCopy.splice(0, 2)
-
-  const numbersSum = num1 + num2
-  if (isPossible(testValue, [numbersSum, ...numbersCopy])) {
+  // Addition
+  if (isPossible(testValue - numbers[0], numbers.slice(1))) {
     return true
   }
 
-  const numbersMultiple = num1 * num2
-  if (isPossible(testValue, [numbersMultiple, ...numbersCopy])) {
+  // Multiplication
+  if (
+    testValue % numbers[0] === 0 &&
+    isPossible(testValue / numbers[0], numbers.slice(1))
+  ) {
     return true
   }
 
-  const numbersConcatenation = Number(`${num1}${num2}`)
-  if (isPossible(testValue, [numbersConcatenation, ...numbersCopy])) {
-    return true
+  // Concatenation
+  if (testValue.toString().endsWith(numbers[0].toString())) {
+    const regex = new RegExp(`${numbers[0]}$`)
+    const newTestValue = Number(testValue.toString().replace(regex, ''))
+
+    if (isPossible(newTestValue, numbers.slice(1))) {
+      return true
+    }
   }
 
   return false
@@ -61,7 +87,16 @@ export default async (): Promise<string | number> => {
   let result = 0
 
   for (const { testValue, numbers } of input) {
-    if (!isPossible(testValue, numbers)) {
+    const isRowPossible = isPossible(testValue, numbers.reverse())
+
+    if (DEBUG_LOG) {
+      console.log(
+        isRowPossible ? chalk.green('possible') : chalk.red('not possible'),
+      )
+      console.log(' ')
+    }
+
+    if (!isRowPossible) {
       continue
     }
 

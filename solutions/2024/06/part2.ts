@@ -1,9 +1,14 @@
+/**
+ * Quite slow, need to optimize search
+ * by indexing obstructions and maybe that way?
+ */
+
 import { readFileSync } from 'fs'
 import drawMap from './draw-map'
 import { Coordinates, GuardCoordinates, GuardDirection, Input } from './types'
 
-const inputName = 'demo'
-// const inputName = 'input'
+// const inputName = 'demo'
+const inputName = 'input'
 
 const rawData = readFileSync(`./${inputName}.txt`, 'utf-8')
 
@@ -90,8 +95,7 @@ function moveGuard(
   return [guardCoordinates, false]
 }
 
-async function isStuckInLoop(input): Promise<boolean> {
-  let result = false
+async function run(input): Promise<[boolean, boolean, Set<string>]> {
   let guardCoordinates: GuardCoordinates
 
   for (let row = 0; row < input.length; row++) {
@@ -117,7 +121,7 @@ async function isStuckInLoop(input): Promise<boolean> {
     )
 
     const historyKey = Object.values(guardCoordinates).join(';')
-    const isStuck = locationHistory.has(historyKey)
+    const isStuck = !isFinished && locationHistory.has(historyKey)
 
     guardCoordinates = nextGuardCoordinates
 
@@ -127,8 +131,8 @@ async function isStuckInLoop(input): Promise<boolean> {
       await drawMap(input, guardCoordinates, breakLoop)
     }
 
-    if (isStuck && !isFinished) {
-      result = true
+    if (isStuck) {
+      return [isFinished, isStuck, locationHistory]
     }
 
     if (breakLoop) {
@@ -138,37 +142,57 @@ async function isStuckInLoop(input): Promise<boolean> {
     locationHistory.add(historyKey)
   } while (guardCoordinates)
 
-  return result
+  return [true, false, locationHistory]
+}
+
+async function getPossibleObstructionPositions(
+  input: Input,
+): Promise<Set<string>> {
+  const clonedInput = JSON.parse(JSON.stringify(input))
+
+  const [, , locationHistory] = await run(clonedInput)
+
+  const uniqueLocations: Set<string> = new Set()
+
+  for (const historyItem of locationHistory) {
+    uniqueLocations.add(historyItem.split(';').splice(0, 2).join(';'))
+  }
+
+  return uniqueLocations
 }
 
 export default async (): Promise<string | number> => {
   const input = parseInput(rawData)
 
+  const obstructionPositions = await getPossibleObstructionPositions(input)
+  const obstructionPositionsValues = [...obstructionPositions.values()]
   const stuckInputs = []
-  for (let row = 0; row < input.length; row++) {
-    for (let col = 0; col < input[row].length; col++) {
-      const item = input[row][col]
+  for (let index = 0; index < obstructionPositionsValues.length; index++) {
+    const [row, col] = obstructionPositionsValues[index].split(';')
 
-      if (item === '█' || item === '^') {
-        continue
-      }
+    console.log(`${index + 1}/${obstructionPositionsValues.length}`)
 
-      const clonedInput = JSON.parse(JSON.stringify(input))
+    const item = input[row][col]
 
-      clonedInput[row][col] = 'O'
+    if (item === '█' || item === '^') {
+      continue
+    }
 
-      const isStuck = await isStuckInLoop(clonedInput)
+    const clonedInput = JSON.parse(JSON.stringify(input))
 
-      if (isStuck) {
-        stuckInputs.push(clonedInput)
-      }
+    clonedInput[row][col] = 'O'
+
+    const [, isStuck] = await run(clonedInput)
+
+    if (isStuck) {
+      stuckInputs.push(clonedInput)
     }
   }
 
-  for (const stuckInput of stuckInputs) {
-    console.log(stuckInput.map((row) => row.join('')).join('\n'))
-    console.log('-------------')
-  }
+  // for (const stuckInput of stuckInputs) {
+  //   console.log(stuckInput.map((row) => row.join('')).join('\n'))
+  //   console.log('-------------')
+  // }
 
   return stuckInputs.length
 }

@@ -18,9 +18,9 @@ async function getCacheFileContents() {
     // Return empty cache if file doesn't exist or is unreadable
     if (error.code === 'ENOENT') {
       cacheFileContents = {}
+    } else {
+      throw error
     }
-
-    throw error
   }
 }
 

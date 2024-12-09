@@ -14,5 +14,7 @@ function parseInput(data: string): Input {
 export default async (): Promise<string | number> => {
   const input = parseInput(rawData)
 
+  console.log(input)
+
   return ''
 }

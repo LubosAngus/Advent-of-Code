@@ -7,7 +7,7 @@ import ora from 'ora'
 export default async (): Promise<void> => {
   const runEslintAndPrettier = await confirm({
     message: 'Run ESLint and Prettier?',
-    default: false,
+    default: true,
   }).catch(async (error) => {
     console.log()
     console.log(chalk.blue.italic(error.message))

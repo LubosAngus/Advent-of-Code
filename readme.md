@@ -5,3 +5,5 @@
 - [ ] choose which files to commit
 - [ ] option to edit the commit message
 - [ ] organize cache into dot syntax `.` => `a.b.c`
+- [ ] fix cache, when only one answer is provided
+- [ ] better demo fetching, (11/24)

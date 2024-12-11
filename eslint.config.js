@@ -9,5 +9,10 @@ export default [
   { languageOptions: { globals: globals.node } },
   pluginJs.configs.recommended,
   ...tsEslint.configs.recommended,
+  {
+    rules: {
+      '@typescript-eslint/prefer-as-const': 'warning',
+    },
+  },
   eslintConfigPrettier,
 ]

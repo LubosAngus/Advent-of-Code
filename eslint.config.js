@@ -11,7 +11,7 @@ export default [
   ...tsEslint.configs.recommended,
   {
     rules: {
-      '@typescript-eslint/prefer-as-const': 'warning',
+      '@typescript-eslint/prefer-as-const': 'warn',
     },
   },
   eslintConfigPrettier,

@@ -8,3 +8,4 @@
 - [ ] fix cache, when only one answer is provided
 - [ ] better demo fetching, (11/24)
 - [ ] run second part right away after completing the first part
+- [ ] remember last played, auto-select next one, or same if not achieved both stars
